@@ -10,12 +10,131 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body onload="populatePage(3)">
 
+	<!--
+			Notes:
+			Needs to have a button to roll new jobs
+			Search bar
+			Flex containers?
+		-->
+
+	<!--Test button to generate new jobs-->
+	<button class="btn btn-dark" onclick="generateJob(-1)">DEBUG: New Job</button>
+
+	<!--Main container
+		Houses job listings-->
+	<div class="container">
+		<div class="row">
+			<!--Left side of the page?-->
+			<div class="col" id="col0">
+				<div class="container">
+					<div class="card bg-light text-dark">
+						<div class="card-body">
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+							leftTest
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<!--Center of the page-->
+			<div class="col-7" id="col1">
+
+				<!--Flex box to hold the job listings-->
+				<div class="d-flex flex-column bd-highlight mb-3" id="jobsBox">
+
+					<!--Tentative job container layout. May or may not represent the code inserted by JS-->
+					<!--
+					<div class="p-2 bd-highlight">
+						<button type="button" class="btn btn-link btn-block" data-toggle="tooltip"
+							data-placement="right" title="Learn more" onclick="console.log('TEST')">
+							<div class="card bg-light text-dark">
+								<div class="card-body">
+									<table class="table table-bordered">
+										<tr>
+											<th colspan="2">Title</th>
+										</tr>
+										<tr>
+											<td id="jobDif">Difficulty: 5</td>
+											<td id="jobPay">Payment: $20</td>
+										</tr>
+										<tr>
+											<td colspan="2" id="jobDead">Deadline: 4/16/2077</td>
+										</tr>
+										<tr>
+											<td colspan="2" style="display: table-cell" id="jobBrief">Brief description
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</button>
+					</div>
+					-->
+
+				</div>
+			</div>
+
+			<!--Displays currently focused job-->
+			<div class="col" style="display: none" id="col3">
+				<div id="focusBox">
+
+				</div>
+			</div>
+
+
+			<!--Right side of the page?-->
+			<div class="col" id="col2">
+				<div class="container">
+					<div class="card bg-light text-dark">
+						<div class="card-body">
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+							rightTest
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+
+		</div>
+
+
+
+
+
+
+
+
+
+	</div>
+
+
+
+
+
+	<script src="../resources/js/scripts.js"></script>
 </body>
 
-<footer class="page-footer border-top">
-	<br>
-</footer>
 
 </html>
