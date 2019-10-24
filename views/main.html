@@ -22,7 +22,7 @@
 			Flex containers?
 		-->
 
-	<!--Nav and Search-->
+	<!--Navbar-->
 	<div class="w3-top">
 		<div class="w3-bar w3-white w3-card" id="myNavbar">
 			<a href="Official_main.html" class="w3-bar-item w3-button w3-wide">ARBONSI</a>
@@ -39,64 +39,63 @@
 	<br></br>
 	<br></br>
 
-	<!--Main container
-		Houses job traits-->
-	<div class="w3-right">
-		<form class="form-inline md-form mr-auto mb-4">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-			<button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
-		</form>
+	<!--Search bar-->
+	<div class="row">
+	
+		<!--OLD CODE DOESN'T WORK WITH THE GRID SYSTEM
+			WRITE NEW SEARCH BAR CODE HERE-->
+
+		<!-- <div class="w3-right">
+			<form class="form-inline md-form mr-auto mb-4">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
+			</form>
+		</div> -->
 	</div>
 
-
-	<div class="container">
-		<div class="row">
-			<!--Left side of the page?-->
-			<div class="col-3" id="col0">
-				<div class="container">
-					<div class="card bg-light text-dark">
-						<div class="card-body">
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-							This card will contain the check-boxes pertainint to job listings.
-						</div>
+	<div class="row">
+		<!--Left side of the page?-->
+		<div class="col-2" id="col0">
+			<div class="container">
+				<div class="card bg-light text-dark">
+					<div class="card-body">
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
+						This card will contain the check-boxes pertainint to job listings.
 					</div>
 				</div>
-
 			</div>
 
-
-			<!--Center of the page-->
-			<div class="col-7" id="col1">
+		</div>
 
 
+		<!--Right column, holds the job listings-->
+		<div class="col" id="col1">
 
-				<!--Flex box to hold the job listings-->
-				<div class="d-flex flex-column bd-highlight mb-3" id="jobsBox"></div>
-			</div>
+			<!--Flex box to hold the job listings-->
+			<div class="d-flex flex-column bd-highlight mb-3" id="jobsBox"></div>
+		</div>
 
-			<!--Displays currently focused job-->
-			<!--You mean 'featured'?-->
-			<div class="col" style="display: none" id="col2">
-				<div id="focusBox">
+		<!--Displays currently focused job-->
+		<!--You mean 'featured'?-->
+		<div class="col" style="display: none" id="col2">
+			<div id="focusBox">
 
-				</div>
 			</div>
 		</div>
 	</div>
 
 	<script src="../resources/js/scripts.js"></script>
 </body>
-
 
 </html>

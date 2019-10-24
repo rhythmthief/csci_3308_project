@@ -56,20 +56,27 @@ function generateJob(id) {
 jobData -- takes an array with job info */
 function displayJob(jobData) {
 
+	//Throw everything into a single line
+	//Use cards: title, brief description, deadline
+	//Title | Difficulty | Deadline | Description
+
+	//profile redirect
+	//If you're not logged in, can't click on jobs
+	//profile page
+	//tags
+
 	/* Creates an element to store job data */
 	jobBox.innerHTML =
 		jobBox.innerHTML +
 		"<div class=\"p-2 bd-highlight\"> <button type=\"button\" class=\"btn btn-link btn-block\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"Learn more\" onclick=\"focusJob(" +
 		jobData[0] +
-		")\"><div class=\"card bg-light text-dark\"> <div class=\"card-body\"><table class=\"table table-bordered\"><tr><th colspan=\"2\">" +
+		")\"><div class=\"card bg-light text-dark\"><div class=\"card-body\"><table><tr><th>" +
 		jobData[1] +
-		"</th></tr><tr><td>Difficulty: " +
-		jobData[4] +
-		"</td><td id=\"jobPay\">Payment: $" +
-		jobData[5] +
-		"</td></tr><tr><td colspan=\"2\">Deadline: " +
+		"</th><td style=\"padding-left:20px; padding-right:20px\">|</td><td>" +
 		jobData[6] +
-		"</td></tr><tr><td colspan=\"2\">" +
+		"</td><td style=\"padding-left:20px; padding-right:20px\">|</td><td>Difficulty: " +
+		jobData[4] +
+		"</td><td style=\"padding-left:20px; padding-right:20px\">|</td><td>" +
 		jobData[3] +
 		"</td></tr></table></div></div></button></div>";
 }
