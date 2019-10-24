@@ -12,6 +12,17 @@ jobData -- array, used to pass data from the database to the webpage
 	6: Deadline		(string)
 */
 
+/*
+### Notes ###
+	Add employer name
+	Employer affiliation
+	Tags
+*/
+
+
+
+
+
 var jobCounter = 0; //Tentative global counter, will probably be deprecated in the future in favor of database IDs
 var displayedJobs = []; //Keeps track of the displayed jobs by their IDs
 var jobBox = document.getElementById("jobsBox"); //Reference to the jobsBox element
@@ -20,9 +31,8 @@ var focusBox = document.getElementById("focusBox");
 /* Main Page grid system columns
 0 -- left column, normal view
 1 -- middle column, normal view
-2 -- right column, normal view
-3 -- alternative middle column, focused view */
-var colList = [document.getElementById("col0"), document.getElementById("col1"), document.getElementById("col2"), document.getElementById("col3")]
+2 -- alternative middle column, focused view */
+var colList = [document.getElementById("col0"), document.getElementById("col1"), document.getElementById("col2")];
 
 /* Populates the main page with jobs. 
 count -- takes the number of jobs to load */
@@ -93,14 +103,12 @@ function toggleColumns(state) {
 	if (state) {
 		colList[0].style.display = "none";
 		colList[1].style.display = "none";
-		colList[2].style.display = "none";
-		colList[3].style.display = "block"
+		colList[2].style.display = "block";
 	}
 	else {
 		colList[0].style.display = "block";
 		colList[1].style.display = "block";
-		colList[2].style.display = "block";
-		colList[3].style.display = "none"
+		colList[2].style.display = "none";
 	}
 }
 
@@ -114,6 +122,9 @@ id -- takes the identifier of a job within the database */
 function fetchJob(id) {
 
 	/* To be implemented
+		See 10/23 lecture
+
+		Alternatively:
 		https://node-postgres.com/ 
 		
 		Sends a query to the database*/
@@ -126,6 +137,14 @@ function fetchJob(id) {
 Takes an array of job data */
 function newJob(data) {
 	//Have to store a picture on the server and pass a local path?
+	/* To be implemented
+		See 10/23 lecture
+
+		Alternatively:
+		https://node-postgres.com/ 
+		
+		Sends a query to the database*/
+
 }
 
 /* Rolls dummy job data for the project demo */

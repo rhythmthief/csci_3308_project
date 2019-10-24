@@ -13,7 +13,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 
-	<body onload="populatePage(3)">
+<body onload="populatePage(3)">
 
 	<!--
 			Notes:
@@ -22,156 +22,78 @@
 			Flex containers?
 		-->
 
-		<!--Nav and Search-->
-		<div class="w3-top">
-		  <div class="w3-bar w3-white w3-card" id="myNavbar">
-		    <a href="Official_main.html" class="w3-bar-item w3-button w3-wide">ARBONSI</a>
-		    <!-- Right-sided navbar links -->
-				<div class="w3-right">
-		      <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-		      <a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> TEAM</a>
-		      <a href="#login" class="w3-bar-item w3-button"><i class="fa fa-user-circle"></i> LOGIN</a>
-		      <a href="#signup" class="w3-bar-item w3-button"><i class="fa fa-user-plus"></i> SIGN UP</a>
-		    </div>
-		  </div>
+	<!--Nav and Search-->
+	<div class="w3-top">
+		<div class="w3-bar w3-white w3-card" id="myNavbar">
+			<a href="Official_main.html" class="w3-bar-item w3-button w3-wide">ARBONSI</a>
+			<!-- Right-sided navbar links -->
+			<div class="w3-right">
+				<a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+				<a href="#team" class="w3-bar-item w3-button"><i class="fa fa-user"></i> TEAM</a>
+				<a href="#login" class="w3-bar-item w3-button"><i class="fa fa-user-circle"></i> LOGIN</a>
+				<a href="#signup" class="w3-bar-item w3-button"><i class="fa fa-user-plus"></i> SIGN UP</a>
+			</div>
 		</div>
+	</div>
 
-		<br></br>
-		<br></br>
-	<!--Test button to generate new jobs-->
-		<a>Dennis, wtf is this..</a>
-		<button class="btn btn-dark" onclick="generateJob(-1)">DEBUG: New Job</button>
+	<br></br>
+	<br></br>
 
 	<!--Main container
 		Houses job traits-->
-
-
-		<div class="container">
-			<div class="row">
-				<!--Left side of the page?-->
-				<div class="col" id="col0">
-					<div class="container">
-						<div class="card bg-light text-dark">
-							<div class="card-body">
-								This card will contain the check-boxes pertainint to job listings.
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<!--Center of the page-->
-				<div class="col-7" id="col1">
-					<div class="w3-right">
-						<form class="form-inline md-form mr-auto mb-4">
-							<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-							<button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
-						</form>
-					</div>
-					<div>
-						<a href="Official_main.html" class="btn btn-outline-success btn-rounded btn-sm my-0">Reload</a>
-					</div>
-
-
-					<!--Flex box to hold the job listings-->
-					<div class="d-flex flex-column bd-highlight mb-3" id="jobsBox"></div>
-				</div>
-
-				<!--Displays currently focused job-->
-					<!--You mean 'featured'?-->
-				<div class="col" style="display: none" id="col3">
-					<div id="focusBox">
-
-					</div>
-				</div>
-
-
-			<!--Right side of the page?-->
-			<div class="col" id="col2">
-				<div class="container">
-					<div class="card bg-light text-dark">
-						<div class="card-body">
-							<!--Tentative job container layout. May or may not represent the code inserted by JS-->
-
-							<a class="btn btn-primary" href="#" role="button">Select</a>
-
-							<div class="p-2 bd-highlight">
-								<button type="button" class="btn btn-link btn-block" data-toggle="tooltip"
-									data-placement="right" title="Learn more" onclick="console.log('TEST')">
-									<div class="card bg-light text-dark">
-										<div class="card-body">
-											<table class="table table-bordered">
-												<tr>
-													<th colspan="2">Title</th>
-												</tr>
-												<tr>
-													<td id="jobDif">Difficulty: 5</td>
-													<td id="jobPay">Payment: $20</td>
-												</tr>
-												<tr>
-													<td colspan="2" id="jobDead">Deadline: 4/16/2077</td>
-												</tr>
-												<tr>
-													<td colspan="2" style="display: table-cell" id="jobBrief">Brief description
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</button>
-							</div>
-
-							<div class="p-2 bd-highlight">
-								<a class="btn btn-primary" href="#" role="button">Select</a>
-								<button type="button" class="btn btn-link btn-block" data-toggle="tooltip"
-									data-placement="right" title="Learn more" onclick="console.log('TEST')">
-									<div class="card bg-light text-dark">
-										<div class="card-body">
-											<table class="table table-bordered">
-												<tr>
-													<th colspan="2">Title</th>
-												</tr>
-												<tr>
-													<td id="jobDif">Difficulty: 3</td>
-													<td id="jobPay">Payment: $15</td>
-												</tr>
-												<tr>
-													<td colspan="2" id="jobDead">Deadline: 4/20/6969</td>
-												</tr>
-												<tr>
-													<td colspan="2" style="display: table-cell" id="jobBrief">Brief description
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-								</button>
-							</div>
-
-						</div>
-					</div>
-
-				</div>
-			</div>
-
-
-
-
-
-		</div>
-
-
-
-
-
-
-
-
-
+	<div class="w3-right">
+		<form class="form-inline md-form mr-auto mb-4">
+			<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+			<button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
+		</form>
 	</div>
 
 
+	<div class="container">
+		<div class="row">
+			<!--Left side of the page?-->
+			<div class="col-3" id="col0">
+				<div class="container">
+					<div class="card bg-light text-dark">
+						<div class="card-body">
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+							This card will contain the check-boxes pertainint to job listings.
+						</div>
+					</div>
+				</div>
+
+			</div>
 
 
+			<!--Center of the page-->
+			<div class="col-7" id="col1">
+
+
+
+				<!--Flex box to hold the job listings-->
+				<div class="d-flex flex-column bd-highlight mb-3" id="jobsBox"></div>
+			</div>
+
+			<!--Displays currently focused job-->
+			<!--You mean 'featured'?-->
+			<div class="col" style="display: none" id="col2">
+				<div id="focusBox">
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script src="../resources/js/scripts.js"></script>
 </body>
