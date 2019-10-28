@@ -1,0 +1,29 @@
+create table if not exists job(                                       
+id serial primary key,                                                          
+title varchar(50),                                                             
+description varchar(500),
+brief_description varchar(250), 
+difficulty smallint,
+payment smallint,
+deadline varchar(50),                                                      
+tags varchar(50));
+
+create table if not exists login_info(                                     
+username VARCHAR(50) NOT NULL,                                                  
+password varchar(50) NOT NULL);
+
+create table if not exists employers(                                 
+employer_name VARCHAR(50) NOT NULL,                                             
+about_employer varchar(500),                                                    
+company varchar(50),                                                            
+employer_email varchar(50));
+
+create table if not exists students(                                  
+student_name VARCHAR(50) NOT NULL,                                              
+skills varchar(250),                                                            
+about_me varchar(500),                                                          
+school varchar(50),                                                             
+student_email varchar(50));
+
+
+
