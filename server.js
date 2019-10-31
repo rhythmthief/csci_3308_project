@@ -2,46 +2,39 @@
 	TESTING CODE, EXPECT COMMENTS AT A LATER DATE
 */
 
-const express = require('express'); // Add the express framework has been added
+const express = require('express');
 let app = express();
 const pug = require('pug');
-
-// const pgp = require('pg-promise')(); //db connection
-
-// const dbConfig = {
-// 	host: 'localhost',
-// 	port: 5432,
-// 	database: 'db',
-// 	user: 'postgres',
-// 	password: '*****'
-// };
-
-// let db = pgp(dbConfig);
-
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
+/* Database section */
+//TBD
+
+/* Declaring renderers
+Query passes are to be restored later */
+app.get('/signin', function (req, res) {
+	res.render ('pages/signin')
+});
+
 app.get('/main', function (req, res) {
-	var query = ';';
-	db.any(query)
-		.then(function (rows) {
-			res.render('pages/main', {
-				my_title: "Home Page",
-				data: rows,
-				color: '',
-				color_msg: ''
-			})
-		})
-		.catch(function (err) {
-			// display error message in case an error
-			req.flash('error', err); //if this doesn't work for you replace with console.log
-			res.render('pages/main', {
-				title: 'Home Page',
-				data: '',
-				color: '',
-				color_msg: ''
-			})
-		})
+	res.render ('pages/main')
+});
+
+app.get('/', function(req,res){
+	res.render('pages/start_page')
+});
+
+app.get('/signin', function(req,res){
+	res.render('pages/signin')
+});
+
+app.get('/signupemployee', function(req,res){
+	res.render('pages/signupemployee')
+});
+
+app.get('/signupstudent', function(req,res){
+	res.render('pages/signupstudent')
 });
 
 app.listen(3000);
