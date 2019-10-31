@@ -1,0 +1,1 @@
+CREATE VIEW jobListing_full AS SELECT id, title, description, difficulty, payment, deadline, employer_name, company, employer_email, tags FROM job, employers;
