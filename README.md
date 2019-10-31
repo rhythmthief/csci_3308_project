@@ -2,4 +2,4 @@
 Team 3 Final Project
 
 Deployment:  
- ./deployDB.sh #Creates a postgres DB and populates it with views
+ ./deployDB.sh #Creates a postgres DB and populates it with tables and views
