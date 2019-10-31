@@ -1,4 +1,6 @@
-CREATE TABLE IF NOT EXISTS job(                                       
+CREATE DATABASE arbonsidb;
+
+CREATE TABLE IF NOT EXISTS jobs(                                       
 id serial primary key,                                                          
 title varchar(50),                                                             
 description varchar(500),

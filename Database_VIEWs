@@ -1,4 +1,4 @@
-CREATE VIEW jobListing_full AS SELECT id, title, description, difficulty, payment, deadline, employer_name, company, employer_email, tags FROM job, employers;
-CREATE VIEW jobListing_preview AS SELECT id, title, difficulty, deadline, brief_description FROM job;
+CREATE VIEW jobListing_full AS SELECT id, title, description, difficulty, payment, deadline, employer_name, company, employer_email, tags FROM jobs, employers;
+CREATE VIEW jobListing_preview AS SELECT id, title, difficulty, deadline, brief_description FROM jobs;
 CREATE VIEW employer_profile AS SELECT employer_name, company, about_employer, employer_email FROM employers;
 CREATE VIEW student_profile AS SELECT student_name, skills, about_me, school, student_email FROM students;
