@@ -2,6 +2,7 @@
 
 /* 
 ### Reference ###
+Notes: 
 jobData -- array, used to pass data from the database to the webpage
 	0: ID			(integer)
 	1: Title 		(string)
@@ -10,6 +11,34 @@ jobData -- array, used to pass data from the database to the webpage
 	4: Difficulty 	(integer)
 	5: Payment		(integer)
 	6: Deadline		(string)
+	7: Tags
+	
+	Employer name
+	Employer affiliation
+	Employer description
+	Employer email
+
+	Student name
+	Student skills
+	Student "about me"
+	Student institution
+	Student email
+
+	Job Listing (preview)
+		ID, Title, Difficulty, Deadline, Brief desc.
+
+	Job Listing (full)
+		ID, Title, Description, Difficulty, payment, deadline, employer name, employer affiliation, employer email, tags
+
+	Employer Profile
+		E. name, E. affiliation, E. description, E. email
+
+	Student Profile
+		S. name, S skills, S. "about me," S. institution, S. email
+
+	Draft a database
+
+	Server setup, rewrite queries
 */
 
 /*
@@ -20,6 +49,7 @@ jobData -- array, used to pass data from the database to the webpage
 */
 
 
+var pg = require('pg');
 
 
 
