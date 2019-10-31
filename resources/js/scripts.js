@@ -48,11 +48,6 @@ jobData -- array, used to pass data from the database to the webpage
 	Tags
 */
 
-
-var pg = require('pg');
-
-
-
 var jobCounter = 0; //Tentative global counter, will probably be deprecated in the future in favor of database IDs
 var displayedJobs = []; //Keeps track of the displayed jobs by their IDs
 var jobBox = document.getElementById("jobsBox"); //Reference to the jobsBox element
