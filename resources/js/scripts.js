@@ -80,16 +80,6 @@ function generateJob(id) {
 /* Displays a job on the page
 jobData -- takes an array with job info */
 function displayJob(jobData) {
-
-	//Throw everything into a single line
-	//Use cards: title, brief description, deadline
-	//Title | Difficulty | Deadline | Description
-
-	//profile redirect
-	//If you're not logged in, can't click on jobs
-	//profile page
-	//tags
-
 	/* Creates an element to store job data */
 	jobBox.innerHTML =
 		jobBox.innerHTML +

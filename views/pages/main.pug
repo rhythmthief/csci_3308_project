@@ -1,3 +1,116 @@
 //- main.pug
-div.container
-	p Main
+
+//- Default navbar
+include ../partials/navbar.pug
+
+head
+	title Main Page
+	meta(charset='utf-8')
+	meta(name='viewport' content='width=device-width, initial-scale=1')
+	link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
+	link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+	link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+	link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+	script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+	script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+	style.
+		.SearchBar {
+		position: absolute;
+		top: 0px;
+		left: 35px;
+		height: 30px;
+		width: 50px;
+		}
+		.SearchBar input {
+		height: 30px;
+		width: 500px;
+		}
+		.startDate input {
+		height: 30px;
+		width: 70px;
+		}
+		.MaxMonth input {
+		height: 30px;
+		width: 70px;
+		}
+br
+br
+br
+br
+.row
+	// Left side of the page?
+	#col0.col-2
+		.container
+			.card.bg-light.text-dark
+				.card-body
+					h5="Job Traits"
+					ul.list-group
+						li.list-group-item
+							p
+								strong Difficulty
+							form
+								.form-check
+									input#defaultCheck1.form-check-input(type='checkbox' value='')
+									label.form-check-label(for='defaultCheck1')
+										| 1
+								.form-check
+									input#defaultCheck2.form-check-input(type='checkbox' value='')
+									label.form-check-label(for='defaultCheck2')
+										| 2
+								.form-check
+									input#defaultCheck2.form-check-input(type='checkbox' value='')
+									label.form-check-label(for='defaultCheck2')
+										| 3
+								.form-check
+									input#defaultCheck2.form-check-input(type='checkbox' value='')
+									label.form-check-label(for='defaultCheck2')
+										| 4
+								.form-check
+									input#defaultCheck2.form-check-input(type='checkbox' value='')
+									label.form-check-label(for='defaultCheck2')
+										| 5
+						li.list-group-item
+							p
+								strong Due Date
+							.startDate
+								.row
+									.col-sm-6
+										.form-group
+											#datetimepicker1.input-group.date
+												input.form-control(type='text')
+												span.input-group-addon
+													span.glyphicon.glyphicon-calendar
+	// Right column, holds the job listings
+	#col1.col
+		// Flex box to hold the job listings
+		#jobsBox.d-flex.flex-column.bd-highlight.mb-3
+			br
+			br
+			.SearchBar
+				form
+					input.form-control.mr-sm-2(type='text' placeholder='Company Search' required='')
+			
+			for job in jobs
+				div(class="p-2 bd-highlight")
+					button(type="button" class="btn btn-link btn-block" data-toggle="tooltip" data-placement="right" title="Learn more" onclick="focusJob('test')")
+						div(class="card bg-light text-dark")
+							div(class="card-body")
+								table
+									tr
+										th=job.title
+										td(style="padding-left:20px; padding-right:20px") |
+										td=job.date
+										td(style="padding-left:20px; padding-right:20px") |
+										td="Difficulty: " + job.difficulty
+										td(style="padding-left:20px; padding-right:20px") |
+										td=job.brief
+
+
+		//-	for job in jobs
+		//-		console.log(
+
+	// Displays currently focused job
+	#col2.col(style='display: none')
+		#focusBox
+script(src='../resources/js/scripts.js')
