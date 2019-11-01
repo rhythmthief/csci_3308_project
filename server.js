@@ -22,7 +22,7 @@ app.get('/signin', function (req, res) {
 
 app.get('/main', function (req, res) {
 	res.render('pages/main', {
-		jobs: scripts_node.generateJobs(5)
+		jobs: scripts_node.generateJobs(10)
 	});
 });
 
