@@ -1,6 +1,4 @@
-CREATE DATABASE arbonsidb;
-
-CREATE TABLE IF NOT EXISTS jobs(                                       
+create table if not exists job(                                       
 id serial primary key,                                                          
 title varchar(50),                                                             
 description varchar(500),
@@ -8,24 +6,30 @@ brief_description varchar(250),
 difficulty smallint,
 payment smallint,
 deadline varchar(50),                                                      
-tags varchar(50));
+tags varchar(10)[] NOT NULL,
+creator serial,
+acceptor serial;
 
-CREATE TABLE IF NOT EXISTS login_info(                                     
+create table if not exists login_info(                                     
 username VARCHAR(50) NOT NULL,                                                  
 password varchar(50) NOT NULL);
 
-CREATE TABLE IF NOT EXISTS employers(                                 
-employer_name VARCHAR(50) NOT NULL,                                             
+create table if not exists employers(                                 
+employer_name varchar(50), 
+employer_id serial primary key,                                         
 about_employer varchar(500),                                                    
 company varchar(50),                                                            
-employer_email varchar(50));
+employer_email varchar(50))
+created_jobs serial[];
 
-CREATE TABLE IF NOT EXISTS students(                                  
-student_name VARCHAR(50) NOT NULL,                                              
+create table if not exists students(                                  
+student_name varchar(50),
+student_id serial primary key,                                              
 skills varchar(250),                                                            
 about_me varchar(500),                                                          
 school varchar(50),                                                             
-student_email varchar(50));
+student_email varchar(50))
+accepted_jobs serial[];
 
 
 
