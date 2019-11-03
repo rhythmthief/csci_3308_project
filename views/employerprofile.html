@@ -14,7 +14,7 @@
   text-align: center;
   font-family: helvetica;
   margin-left: 35px;
-  float:left; 
+  float:left;
 
 }
 
@@ -63,25 +63,25 @@ button:hover, a:hover {
   <h3><br>Firstname Lastname</h3>
   <p class="institution">Institution</p>
   <a href="mailto:dummyemail@dummy.com" style="font-size: medium;">dummyemail@dummy.com</a>.<br>   <div style="margin: 24px 0;">
-    <a href="#"><i class="fa fa-linkedin"></i></a>  
-    <a href="#"><i class="fa fa-twitter"></i></a>  
-    <a href="#"><i class="fa fa-facebook"></i></a> 
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
   </div>
 </div>
 <div class = "jobs">
-  
+
 <h3 style = "font-family:helvetica; text-align: center">Jobs Listings</h3>
 <select id="jobs_listed" style = "margin-left: 40px; text-align:left; font-family: helvetica; font-size: large; float:left;" size = "8"></select>
 <br>
 <button onclick="showForm()" style ="float:right;">Add a field</button>
-<form id="frm1" style = "display:none;">
+<form action="#" id="frm1" style = "display:none;">
        job name: <input type="text" name="jname" value="" id = "jname"><br>
 <button onclick= "addElement(document.getElementById('jname').value)">submit</button>
 
 </form>
 <button onclick="deleteElement()" style ="float:right;">Remove selected job</button>
 <script>
-let listed = ["Restaurant server", "coding game", "crying","this","csci project"];     
+let listed = ["Restaurant server", "coding game", "crying","this","csci project"];
 
 
 
