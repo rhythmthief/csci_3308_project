@@ -9,7 +9,7 @@ app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
 const scripts_node = require('./resources/js/scripts_node.js');
-console.log (scripts_node.generateJobs(5))
+//console.log (scripts_node.generateJobs(5))
 
 /* Database section */
 //TBD

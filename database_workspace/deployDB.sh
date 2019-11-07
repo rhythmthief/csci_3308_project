@@ -12,12 +12,29 @@ QUERIES[6]="CREATE VIEW jobListing_preview AS SELECT id, title, difficulty, dead
 QUERIES[7]="CREATE VIEW employer_profile AS SELECT employer_name, company, about_employer, employer_email FROM employers;"
 QUERIES[8]="CREATE VIEW student_profile AS SELECT student_name, skills, about_me, school, student_email FROM students;"
 
-for ((i = 0; i < ${#QUERIES[@]}; i++))
-do
-    if [[ $i == 0 || $i == 1 ]] #Drops and creates the database
-    then
-        psql -U postgres -c "${QUERIES[$i]}" # Dropping a pre-existing database, creating a new one
-    else
-        psql -U postgres -d arbonsi_db -c "${QUERIES[$i]}" #Creating tables and views
-    fi
-done
+declare -a
+
+
+
+#Makes sure all files are present in the directory before starting
+if test -f "$PWD/NAMES.TXT" && test -f "$PWD/PLACES.TXT" && test -f "$PWD/ACRONYMS.TXT";
+then
+	#Creates a new database
+    for ((i = 0; i < ${#QUERIES[@]}; i++))
+    do
+        if [[ $i == 0 || $i == 1 ]] #Drops and creates the database
+        then
+            psql -U postgres -c "${QUERIES[$i]}" # Dropping a pre-existing database, creating a new one
+        else
+            psql -U postgres -d arbonsi_db -c "${QUERIES[$i]}" #Creating tables and views
+        fi
+    done
+
+	#Code to populate the database with entries
+
+
+
+else
+    echo "One or more of the dictionaries are missing. Make sure ACRONYMS.TXT, NAMES.TXT and PLACES.TXT are next to deployDB.sh. Also make sure you are executing the script from project_dir/database_workspace/"
+    exit
+fi
