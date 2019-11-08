@@ -7,8 +7,8 @@ difficulty smallint,
 payment smallint,
 deadline varchar(50),                                                      
 tags varchar(10)[] NOT NULL,
-creator serial,
-acceptor serial);
+creator smallint,
+acceptor smallint);
 
 create table if not exists login_info(                                     
 username VARCHAR(50) NOT NULL,                                                  
@@ -20,7 +20,7 @@ employer_id serial primary key,
 about_employer varchar(500),                                                    
 company varchar(50),                                                            
 employer_email varchar(50)),
-created_jobs serial[]);
+created_jobs smallint[]);
 
 create table if not exists students(                                  
 student_name varchar(50),
@@ -29,7 +29,7 @@ skills varchar(250),
 about_me varchar(500),                                                          
 school varchar(50),                                                             
 student_email varchar(50),
-accepted_jobs serial[]);
+accepted_jobs smallint[]);
 
 
 
