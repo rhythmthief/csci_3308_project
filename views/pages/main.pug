@@ -91,26 +91,45 @@ br
 				form
 					input.form-control.mr-sm-2(type='text' placeholder='Company Search' required='')
 			
-			for job in jobs
-				div(class="p-2 bd-highlight")
-					button(type="button" class="btn btn-link btn-block" data-toggle="tooltip" data-placement="right" title="Learn more" onclick="focusJob('test')")
-						div(class="card bg-light text-dark")
-							div(class="card-body")
-								table
-									tr
-										th=job.title
-										td(style="padding-left:20px; padding-right:20px") |
-										td=job.date
-										td(style="padding-left:20px; padding-right:20px") |
-										td="Difficulty: " + job.difficulty
-										td(style="padding-left:20px; padding-right:20px") |
-										td=job.brief
+			if (mode == 0)
+				for job in jobs
+					div(class="p-2 bd-highlight")
+						form(action="/main/view" method="get")
+							button.btn.btn-link.btn-block(type="submit" name="job_id", value= job.id data-toggle="tooltip" data-placement="right" title="Learn more")
+								div(class="card bg-light text-dark")
+									div(class="card-body")
+										table
+											tr
+												th=job.title
+												td(style="padding-left:20px; padding-right:20px") |
+												td=job.deadline
+												td(style="padding-left:20px; padding-right:20px") |
+												td="Difficulty: " + job.difficulty
+												td(style="padding-left:20px; padding-right:20px") |
+												td=job.brief_description
+			else
+				div(class="p-1 bd-highlight")
+					div(class="card bg-light text-dark")
+						div(class="card-body")
+							table(class="table table-bordered")
+								tr
+									th(colspan="2")=focusedJob[0].title
+								tr
+									td="Difficulty: " + focusedJob[0].difficulty
+									td="Payment: $" + focusedJob[0].payment
+								tr
+									td="Deadline: " + focusedJob[0].deadline
+									td="Tags: " + focusedJob[0].tags
+								tr
+									td(colspan="2")=focusedJob[0].description
+							
+							div.row
+								div.col
+									form(action="/main" method="get")
+										button.btn.btn-dark(type="submit")="Back"
+								div.col
+									form(action="/main/accept" method="post")
+										button.btn.btn-dark(type="submit")="Accept"
 
-
-		//-	for job in jobs
-		//-		console.log(
-
-	// Displays currently focused job
-	#col2.col(style='display: none')
-		#focusBox
+//- Clientside scripts
 script(src='../resources/js/scripts.js')

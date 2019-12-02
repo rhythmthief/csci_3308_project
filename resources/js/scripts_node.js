@@ -11,6 +11,10 @@ module.exports = {
 		}
 
 		return jobs;
+	},
+
+	focusJob: function (job_id) {
+		console.log("test");
 	}
 }
 
