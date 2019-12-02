@@ -113,6 +113,15 @@ br
 						div(class="card-body")
 							table(class="table table-bordered")
 								tr
+									th(colspan="2")="Employer Info"
+								tr
+									td=focusedJob[0].employer_name + " | " + focusedJob[0].employer_email
+									td="Company: " + focusedJob[0].company
+								tr
+									td(colspan="2")=focusedJob[0].about_employer
+
+							table(class="table table-bordered")
+								tr
 									th(colspan="2")=focusedJob[0].title
 								tr
 									td="Difficulty: " + focusedJob[0].difficulty
