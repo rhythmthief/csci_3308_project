@@ -9,7 +9,7 @@ QUERIES[3]="CREATE TABLE IF NOT EXISTS login_info(username VARCHAR(50) NOT NULL,
 QUERIES[4]="create table if not exists employers(employer_name varchar(50),employer_id serial primary key,about_employer varchar(500),company varchar(50),employer_email varchar(50),created_jobs smallint[]);"
 QUERIES[5]="CREATE TABLE IF NOT EXISTS students(student_name VARCHAR(50) NOT NULL,skills varchar(250),about_me varchar(500),school varchar(50),student_email varchar(50));"
 QUERIES[6]="CREATE VIEW jobListing_preview AS SELECT id, title, difficulty, deadline, brief_description FROM job;"
-QUERIES[7]="CREATE VIEW jobListing_full AS SELECT id, title, difficulty, deadline, description,payment,tags,about_employer,company,employer_email,employer_name FROM job, employers;"
+QUERIES[7]="CREATE VIEW jobListing_full AS SELECT id, title, difficulty, deadline, description,payment,tags,about_employer,company,employer_email,employer_name FROM job INNER JOIN employers ON job.creator=ANY(employers.created_jobs);"
 QUERIES[8]="CREATE VIEW employer_profile AS SELECT employer_name, company, about_employer, employer_email FROM employers;"
 QUERIES[9]="CREATE VIEW student_profile AS SELECT student_name, skills, about_me, school, student_email FROM students;"
 
