@@ -1,9 +1,10 @@
 //- start_page.pug
+
+//- Default navbar, contains all includes / links
+include ../partials/navbar.pug
+
 doctype html
 title Arbonsi
-
-// Navbar
-include ../partials/navbar.pug 
 
 // Header with full-height image
 header#home.bgimg-1.w3-display-container.w3-grayscale-min
@@ -17,13 +18,7 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 #about.w3-container(style='padding:128px 16px')
 	h3.w3-center ABOUT THE PROJECT
 	.w3-row-padding.w3-center(style='margin-top:64px')
-		p
-			| Our website, Arbonsi, will be a freelancing website targeted towards college students as
-			| a tool to find small jobs within big corporations that could lead to full-time employment
-			| opportunities and internships. Our goal was to create an &lsquo;easy-to-use&rsquo; platform that networks
-			| computer science students with recruiters. We believe that our product has the potential to bring positive change to the Software
-			| Development industry by making it an accessible environment to both experienced
-			| programmers and newcomers alike.
+		p="Our website, Arbonsi, is a freelancing website targeted towards college students as a tool to find small jobs within big corporations that could lead to full-time employment opportunities and internships. Our goal was to create an easy-to-use platform that networks computer science students with recruiters. We believe that our product has the potential to bring positive change to the Software Development industry by making it an accessible environment to both experienced programmers and newcomers alike."
 // Team Section
 #team.w3-container.w3-light-grey(style='padding:128px 16px')
 	h3.w3-center THE TEAM
@@ -34,7 +29,7 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 					h3 Raya Alotaibi
 					p.w3-opacity Computer Science Major, Sophmore
 					p
-						| Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+						| 
 					p
 						button.w3-button.w3-light-grey.w3-block
 							i.fa.fa-envelope
@@ -45,7 +40,7 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 					h3 William Dellinger
 					p.w3-opacity Computer Science Major, Sophmore
 					p
-						| Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+						| 
 					p
 						button.w3-button.w3-light-grey.w3-block
 							i.fa.fa-envelope
@@ -56,7 +51,7 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 					h3 Alden Maben
 					p.w3-opacity Computer Science Major, Year
 					p
-						| Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+						| 
 					p
 						button.w3-button.w3-light-grey.w3-block
 							i.fa.fa-envelope
@@ -67,7 +62,7 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 					h3 Toby Savage
 					p.w3-opacity Computer Science Major, Sophmore
 					p
-						| Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+						| 
 					p
 						button.w3-button.w3-light-grey.w3-block
 							i.fa.fa-envelope
@@ -76,9 +71,9 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 			.w3-card
 				.w3-container
 					h3 Dennis Windham
-					p.w3-opacity Computer Science Major, Year
+					p.w3-opacity Computer Science Major, Sophomore
 					p
-						| Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+						| 
 					p
 						button.w3-button.w3-light-grey.w3-block
 							i.fa.fa-envelope
@@ -89,7 +84,7 @@ header#home.bgimg-1.w3-display-container.w3-grayscale-min
 					h3 Shirley Wu
 					p.w3-opacity Computer Science Major, Year
 					p
-						| Phasellus eget enim eu lectus faucibus vestibulum. Suspendisse sodales pellentesque elementum.
+						| 
 					p
 						button.w3-button.w3-light-grey.w3-block
 							i.fa.fa-envelope

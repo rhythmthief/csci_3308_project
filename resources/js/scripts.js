@@ -1,52 +1,16 @@
 /* Collection of scripts used across the website */
 
+
+
+
 /* 
-### Reference ###
-Notes: 
-jobData -- array, used to pass data from the database to the webpage
-	0: ID			(integer)
-	1: Title 		(string)
-	2: Description	(string)
-	3: Brief desc.	(string)
-	4: Difficulty 	(integer)
-	5: Payment		(integer)
-	6: Deadline		(string)
-	7: Tags
-	
-	Employer name
-	Employer affiliation
-	Employer description
-	Employer email
-
-	Student name
-	Student skills
-	Student "about me"
-	Student institution
-	Student email
-
-	Job Listing (preview)
-		ID, Title, Difficulty, Deadline, Brief desc.
-
-	Job Listing (full)
-		ID, Title, Description, Difficulty, payment, deadline, employer name, employer affiliation, employer email, tags
-
-	Employer Profile
-		E. name, E. affiliation, E. description, E. email
-
-	Student Profile
-		S. name, S skills, S. "about me," S. institution, S. email
-
-	Draft a database
-
-	Server setup, rewrite queries
+######################
+###DEPRECATED CODE ###
+######################
 */
 
-/*
-### Notes ###
-	Add employer name
-	Employer affiliation
-	Tags
-*/
+
+
 
 var jobCounter = 0; //Tentative global counter, will probably be deprecated in the future in favor of database IDs
 var displayedJobs = []; //Keeps track of the displayed jobs by their IDs

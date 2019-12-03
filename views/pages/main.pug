@@ -1,19 +1,12 @@
 //- main.pug
 
-//- Default navbar
+//- Default navbar, contains all includes / links
 include ../partials/navbar.pug
+doctype html
 
 head
 	title Main Page
-	meta(charset='utf-8')
-	meta(name='viewport' content='width=device-width, initial-scale=1')
-	link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
-	link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
-	link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
-	link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
-	script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
-	script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
-	script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+
 	style.
 		.SearchBar {
 		position: absolute;
@@ -26,15 +19,7 @@ head
 		height: 30px;
 		width: 500px;
 		}
-		.startDate input {
-		height: 30px;
-		width: 70px;
-		}
-		.MaxMonth input {
-		height: 30px;
-		width: 70px;
-		}
-br
+
 br
 br
 br
@@ -90,7 +75,7 @@ br
 			.SearchBar
 				form
 					input.form-control.mr-sm-2(type='text' placeholder='Company Search' required='')
-			
+
 			if (mode == 0)
 				for job in jobs
 					div(class="p-2 bd-highlight")
@@ -131,7 +116,7 @@ br
 									td="Tags: " + focusedJob[0].tags
 								tr
 									td(colspan="2")=focusedJob[0].description
-							
+
 							div.row
 								div.col
 									form(action="/main" method="get")

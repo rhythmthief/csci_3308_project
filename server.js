@@ -28,7 +28,7 @@ let db = pgp(dbConfig);
 
 
 //Serverside scripts
-const scripts_node = require('./resources/js/scripts_node.js');
+//const scripts_node = require('./resources/js/scripts_node.js');
 
 /* Declaring renderers
 Query passes are to be restored later */
@@ -88,12 +88,12 @@ app.get('/', function (req, res) {
 	res.render('pages/start_page')
 });
 
-app.get('/signupemployee', function (req, res) {
-	res.render('pages/signupemployee');
+app.get('/signup_employer', function (req, res) {
+	res.render('pages/signup_employer');
 });
 
-app.get('/signupstudent', function (req, res) {
-	res.render('pages/signupstudent');
+app.get('/signup_student', function (req, res) {
+	res.render('pages/signup_student');
 });
 
 app.listen(3000);

@@ -1,11 +1,16 @@
 //- Navbar section, to be included at the top of other documents
 doctype html
 title Arbonsi
-meta(charset='UTF-8')
+meta(charset='utf-8')
 meta(name='viewport' content='width=device-width, initial-scale=1')
 link(rel='stylesheet' href='https://www.w3schools.com/w3css/4/w3.css')
 link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
 link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
+
 style.
 	body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 	body, html {
@@ -31,16 +36,16 @@ style.
 // Navbar (sit on top)
 .w3-top
 	#myNavbar.w3-bar.w3-white.w3-card
-		a.w3-bar-item.w3-button.w3-wide(href='#home') ARBONSI
+		a.w3-bar-item.w3-button.w3-wide(href='/main') ARBONSI
 		// Right-sided navbar links
 		.w3-right
-			a.w3-bar-item.w3-button(href='#about') ABOUT
-			a.w3-bar-item.w3-button(href='#team')
+			a.w3-bar-item.w3-button(href='/') ABOUT
+			a.w3-bar-item.w3-button(href='/#team')
 				i.fa.fa-user
 				|  TEAM
-			a.w3-bar-item.w3-button(href='#login')
+			a.w3-bar-item.w3-button(href='/signin')
 				i.fa.fa-user-circle
 				|  LOGIN
-			a.w3-bar-item.w3-button(href='#signup')
+			a.w3-bar-item.w3-button(href='/signup_student')
 				i.fa.fa-user-plus
 				|  SIGN UP
