@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 250px;
+  max-height: 250px;
+  height: 250px;
+  width:250px;
+  margin: auto;
+  text-align: center;
+  font-family: helvetica;
+  margin-left: 35px;
+  float:left;
+
+}
+
+.institution {
+  color: grey;
+  font-size: 18px;
+
+}
+.jobs{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    float:right;
+    width: 900px;
+    height:250px;
+    max-height: 900px;
+    margin-right: 100px;
+}
+/* comment */
+button {
+/*  border: solid;
+*/  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+</head>
+<body>
+
+<h2 style="padding-left:35px; font-family: helvetica;">Employer Profile Card</h2>
+<div class="card" style ="align-items: left;">
+  <h3><br>Firstname Lastname</h3>
+  <p class="institution">Institution</p>
+  <a href="mailto:dummyemail@dummy.com" style="font-size: medium;">dummyemail@dummy.com</a>.<br>   <div style="margin: 24px 0;">
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
+  </div>
+</div>
+<div class = "jobs">
+
+<h3 style = "font-family:helvetica; text-align: center">Jobs Listings</h3>
+<select id="jobs_listed" style = "margin-left: 40px; text-align:left; font-family: helvetica; font-size: large; float:left;" size = "8"></select>
+<br>
+<button onclick="showForm()" style ="float:right;">Add a field</button>
+<form action="#" id="frm1" style = "display:none;">
+       job name: <input type="text" name="jname" value="" id = "jname"><br>
+<button onclick= "addElement(document.getElementById('jname').value)">submit</button>
+
+</form>
+<button onclick="deleteElement()" style ="float:right;">Remove selected job</button>
+<script>
+let listed = ["Restaurant server", "coding game", "crying","this","csci project"];
+
+
+
+let optionList = document.getElementById('jobs_listed').options;
+var options = [];
+for (var i = 0; i<listed.length; i++ )
+{
+  options.push({ text: listed[i]})
+}
+
+
+options.forEach(option =>
+  optionList.add(
+    new Option(option.text)
+  )
+);
+
+function deleteElement() {
+  var x = document.getElementById("jobs_listed");
+  x.remove(x.selectedIndex);
+}
+function showForm() {
+  var x = document.getElementById("frm1");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function addElement(jname) {
+  var x = document.getElementById("jobs_listed");
+  x.add(new Option(jname));
+  options.push({ text: jname});
+  optionList.push(new Option(jname));
+  document.getElementById('jobs_listed').options = optionList;
+}
+
+
+
+  </script>
+
+  </div>
+
+</body>
+</html>
