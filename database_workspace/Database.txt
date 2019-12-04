@@ -11,15 +11,20 @@ creator smallint,
 acceptor smallint);
 
 create table if not exists login_info(                                     
-username VARCHAR(50) NOT NULL,                                                  
-password varchar(50) NOT NULL);
+    username varchar(50), 
+    password varchar(50),  
+    id integer NOT NULL,
+    usertype  varchar(1),
+    userid integer,
+    CONSTRAINT login_info_pkey PRIMARY KEY (id)
+);
 
 create table if not exists employers(                                 
 employer_name varchar(50), 
 employer_id serial primary key,                                         
 about_employer varchar(500),                                                    
 company varchar(50),                                                            
-employer_email varchar(50)),
+employer_email varchar(50),
 created_jobs smallint[]);
 
 create table if not exists students(                                  
@@ -30,6 +35,12 @@ about_me varchar(500),
 school varchar(50),                                                             
 student_email varchar(50),
 accepted_jobs smallint[]);
+
+
+insert into login_info (id,usertype,userid,username,password) values (1,'1','123','zhangsan@sina.com','1234');
+insert into login_info (id,usertype,userid,username,password) values (2,'2','456','lisi@sina.com','1234');
+insert into students (student_id,student_name,school,student_email) values ('123','zhangsan','yangzhou','zhangsan@sina.com');
+insert into employers (employer_id,employer_name,company,employer_email) values ('456','lisi','USA','lisi@sina.com');
 
 
 
