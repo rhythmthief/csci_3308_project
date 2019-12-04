@@ -1,0 +1,134 @@
+<html>
+    <head>
+        <title>Create Job</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <style>
+            .btn {
+            background-color: #3a7b99; /* navy */
+            border: none;
+            color: white;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            }
+            .btn:hover {
+                background-color: #3a9958; /* leaves color */
+                color: white;
+            }
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .rate {
+                float: left;
+                height: 60px;
+                padding: -5 40px;
+            }
+            .rate:not(:checked) > input {
+                position: absolute;
+                top:-9999px;
+            }
+            .rate:not(:checked) > label {
+                float:right;
+                width:1em;
+                overflow:hidden;
+                white-space:nowrap;
+                cursor:pointer;
+                font-size:30px;
+                color:#ccc;
+            }
+            .rate:not(:checked) > label:before {
+                content: '★ ';
+            }
+            .rate > input:checked ~ label {
+                color: #ffc700;    
+            }
+            .rate:not(:checked) > label:hover,
+            .rate:not(:checked) > label:hover ~ label {
+                color: #deb217;  
+            }
+            .rate > input:checked + label:hover,
+            .rate > input:checked + label:hover ~ label,
+            .rate > input:checked ~ label:hover,
+            .rate > input:checked ~ label:hover ~ label,
+            .rate > label:hover ~ input:checked ~ label {
+                color: #c59b08;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#jobForm">
+            Create Job
+        </button>
+  
+        <!-- Modal -->
+        <div class="modal fade" id="jobForm" tabindex="-1" role="dialog" aria-labelledby="jobFormLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New Job</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="briefDescription">Brief Description</label>
+                            <textarea class="form-control" id="briefDescription" rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="tags">Tags</label>
+                            <input type="text" class="form-control" id="tags" >
+                        </div>
+                        <div class="form-group">
+                            <label>Payment</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="text" class="form-control"/>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rate">Difficulty</label>
+                                <div class="form-group">
+                                    <div class="rate">
+                                        <input type="radio" id="star1" name="rate" value="1" />
+                                        <label for="star1" title="text"></label>
+                                        <input type="radio" id="star2" name="rate" value="2" />
+                                        <label for="star2" title="text"></label>
+                                        <input type="radio" id="star3" name="rate" value="3" />
+                                        <label for="star3" title="text"></label>
+                                        <input type="radio" id="star4" name="rate" value="4" />
+                                        <label for="star4" title="text"></label>
+                                        <input type="radio" id="star5" name="rate" value="5" />
+                                        <label for="star5" title="text"></label>
+                                    </div>
+                                 </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
