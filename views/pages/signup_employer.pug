@@ -29,16 +29,13 @@ br
 				.myform.form
 					// align logo to center
 					.text-center
-						img(src='../resources/img/logo.png' alt='emblem' height='130' width='130')
+						img(src='../resources/img/logo.png' class="card-img-top-sm" alt='emblem')
 						p
 						h5(style='font-family:Helvetica; text-align: left;') Create Your Employer Account
 				form(action='#' name='registration')
 					.form-group
-						label(for='exampleInputEmail1') First Name
+						label(for='exampleInputEmail1') Full Name
 						input#firstname.form-control(type='text' name='firstname' aria-describedby='emailHelp' required='')
-					.form-group
-						label(for='exampleInputEmail1') Last Name
-						input#lastname.form-control(type='text' name='lastname' aria-describedby='emailHelp' required='')
 					.form-group
 						label(for='exampleInputEmail1') Company Name
 						input#company.form-control(type='company' name='company' aria-describedby='emailHelp' required='')

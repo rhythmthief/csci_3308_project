@@ -2,11 +2,17 @@
 var jobCounter = 0; //Tentative global counter, will probably be deprecated in the future in favor of database IDs
 var displayedJobs = []; //Keeps track of the displayed jobs by their IDs
 
+
+
 /* 
-######################
-###DEPRECATED CODE ###
-######################
+########################
+### DEPRECATED CODE  ###
+### DO NOT MODIFY OR ###
+### USE THIS FILE    ###
+#######################
 */
+
+
 
 module.exports = {
 	generateJobs: function (count) {

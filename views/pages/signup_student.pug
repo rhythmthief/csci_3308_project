@@ -32,16 +32,13 @@ br
 						img(src='../resources/img/logo.png' alt='emblem' height='130' width='130')
 						p
 						h5(style='font-family:Helvetica; text-align: left;') Create Your Student Account
-				form(action='#' name='registration')
+				form(action='#' name='registration' method="post")
 					.form-group
-						label(for='exampleInputEmail1') First Name
-						input#firstname.form-control(type='text' name='firstname' aria-describedby='emailHelp' required='')
-					.form-group
-						label(for='exampleInputEmail1') Last Name
-						input#lastname.form-control(type='text' name='lastname' aria-describedby='emailHelp' required='')
+						label(for='exampleInputEmail1') Full Name
+						input#firstname.form-control(type='text' name='full_name' aria-describedby='emailHelp' required='')
 					.form-group
 						label(for='exampleInputEmail1') Institution
-						input#company.form-control(type='company' name='company' aria-describedby='emailHelp' required='')
+						input#company.form-control(type='company' name='school' aria-describedby='emailHelp' required='')
 					.form-group
 						label(for='exampleInputEmail1') Email Address
 						input#email.form-control(type='email' name='email' aria-describedby='emailHelp' required='')
@@ -50,7 +47,7 @@ br
 						input#password.form-control(type='password' name='password' aria-describedby='emailHelp' required='')
 					.form-group
 						label(for='exampleInputEmail1') Confirm Password
-						input#confirm_password.form-control(type='password' name='password' aria-describedby='emailHelp' required='')
+						input#confirm_password.form-control(type='password' name='confirm_password' aria-describedby='emailHelp' required='')
 					script.
 						var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
 						function validatePassword(){
@@ -71,6 +68,6 @@ br
 					.col-md-12
 						.form-group(style='float:left')
 							p.text-center(style='padding-left: 15px;')
-								a#signin(href='/signup_employer' style='color:#3a7b99;') &emsp; Not a Student?
+								a#signin(href='/signup_employer' style='color:#3a7b99;') Not a Student?
 footer.page-footer.border-top
 	br

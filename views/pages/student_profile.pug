@@ -1,0 +1,130 @@
+
+//- Default navbar, contains all includes / links
+include ../partials/navbar.pug
+doctype html
+title Arbonsi
+
+style.
+	body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+	body, html {
+	height: 100%;
+	line-height: 1.8;
+	}
+	/* Full height image header */
+	.bgimg-1 {
+	background-position: center;
+	background-size: cover;
+	background-image: url("https://www.tokkoro.com/picsup/1071462-forest.jpg");
+	min-height: 100%;
+	}
+	.w3-bar .w3-button {
+	padding: 16px;
+	}
+	.w3-jumbo {
+	font-size: 100px!important;
+	}
+	.w3-large {
+	font-size: 20px!important;
+	}
+	.btn {
+	background-color: #3a7b99; /* navy */
+	border: none;
+	color: white;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	}
+	.btn:hover {
+	background-color: #3a9958; /* leaves color */
+	color: white;
+	}
+	*{
+	margin: 0;
+	padding: 0;
+	}
+	.rate {
+	float: left;
+	height: 60px;
+	padding: -5 40px;
+	}
+	.rate:not(:checked) > input {
+	position: absolute;
+	top:-9999px;
+	}
+	.rate:not(:checked) > label {
+	float:right;
+	width:1em;
+	overflow:hidden;
+	white-space:nowrap;
+	cursor:pointer;
+	font-size:30px;
+	color:#ccc;
+	}
+	.rate:not(:checked) > label:before {
+	content: '★ ';
+	}
+	.rate > input:checked ~ label {
+	color: #ffc700;
+	}
+	.rate:not(:checked) > label:hover,
+	.rate:not(:checked) > label:hover ~ label {
+	color: #deb217;
+	}
+	.rate > input:checked + label:hover,
+	.rate > input:checked + label:hover ~ label,
+	.rate > input:checked ~ label:hover,
+	.rate > input:checked ~ label:hover ~ label,
+	.rate > label:hover ~ input:checked ~ label {
+	color: #c59b08;
+	}
+
+#team.w3-container.w3-light-grey(style='padding:128px 16px')
+	h1.w3-center Student Profile
+	.w3-row-padding.w3-grayscale(style='margin-top:64px')
+		.w3-col.l4.w3-margin-bottom
+			.w3-card
+				.w3-container
+					img.card-img-top-sm(src='./resources/img/profile.png' alt='profile pic')
+					h3=data_student.student_name
+					form(action="/student_profile/update" method="post")
+						.form-group.row
+							label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Full Name
+							.col-sm-10
+								input#colFormLabelSm.form-control.form-control(type='text' name='form_name' value=data_student.student_name)
+						.form-group.row
+							label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') School
+							.col
+								input#colFormLabelSm.form-control.form-control(type='text' name='form_school' value=data_student.school)
+						.form-group.row
+							label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Email
+							.col
+								input#colFormLabelSm.form-control.form-control(type='email' name='form_email' value=data_student.student_email)
+						.form-group
+							label(for='description') Bio
+							textarea#description.form-control(rows='3' name='form_bio' maxlength="250")=data_student.about_me
+						.w3-margin-bottom
+							button.btn.btn-primary.mb-3(type='submit') Update
+		.w3-col.l4.w3-margin-bottom
+			.w3-card
+				.w3-container
+					.w3-center
+						h1 Jobs Accepted
+						for job in data_jobs
+							div(class="p-2 bd-highlight")
+								form(action="/main/view" method="get")
+									button.btn.btn-link.btn-block(type="submit" name="job_id", value= job.id data-toggle="tooltip" data-placement="right" title="Learn more")
+										div(class="card bg-light text-dark")
+											div(class="card-body")
+												table
+													tr
+														th=job.title
+														td(style="padding-left:20px; padding-right:20px") |
+														td=job.deadline
+														td(style="padding-left:20px; padding-right:20px") |
+														td="Difficulty: " + job.difficulty
+														td(style="padding-left:20px; padding-right:20px") |
+														td=job.brief_description
+
+script(src='script.js')
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')

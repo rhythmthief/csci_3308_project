@@ -123,6 +123,7 @@ br
 										button.btn.btn-dark(type="submit")="Back"
 								div.col
 									form(action="/main/accept" method="post")
+										input(name='job_id' required='' value=focusedJob[0].id style="display:none")
 										button.btn.btn-dark(type="submit")="Accept"
 
 //- Clientside scripts

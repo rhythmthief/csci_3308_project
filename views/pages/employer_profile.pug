@@ -1,0 +1,157 @@
+//- Default navbar, contains all includes / links
+include ../partials/navbar.pug
+
+doctype html
+title Employer Profile
+
+style.
+	body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+	body, html {
+	height: 100%;
+	line-height: 1.8;
+	}
+	/* Full height image header */
+	.bgimg-1 {
+	background-position: center;
+	background-size: cover;
+	background-image: url("https://www.tokkoro.com/picsup/1071462-forest.jpg");
+	min-height: 100%;
+	}
+	.w3-bar .w3-button {
+	padding: 16px;
+	}
+	.w3-jumbo {
+	font-size: 100px!important;
+	}
+	.w3-large {
+	font-size: 20px!important;
+	}
+	.btn {
+	background-color: #3a7b99; /* navy */
+	border: none;
+	color: white;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	}
+	.btn:hover {
+	background-color: #3a9958; /* leaves color */
+	color: white;
+	}
+	*{
+	margin: 0;
+	padding: 0;
+	}
+	.rate {
+	float: left;
+	height: 60px;
+	padding: -5 40px;
+	}
+	.rate:not(:checked) > input {
+	position: absolute;
+	top:-9999px;
+	}
+	.rate:not(:checked) > label {
+	float:right;
+	width:1em;
+	overflow:hidden;
+	white-space:nowrap;
+	cursor:pointer;
+	font-size:30px;
+	color:#ccc;
+	}
+	.rate:not(:checked) > label:before {
+	content: '★ ';
+	}
+	.rate > input:checked ~ label {
+	color: #ffc700;
+	}
+	.rate:not(:checked) > label:hover,
+	.rate:not(:checked) > label:hover ~ label {
+	color: #deb217;
+	}
+	.rate > input:checked + label:hover,
+	.rate > input:checked + label:hover ~ label,
+	.rate > input:checked ~ label:hover,
+	.rate > input:checked ~ label:hover ~ label,
+	.rate > label:hover ~ input:checked ~ label {
+	color: #c59b08;
+	}
+
+#team.w3-container.w3-light-grey(style='padding:128px 16px')
+	h1.w3-center Employer Profile
+	.w3-row-padding.w3-grayscale(style='margin-top:64px')
+		.w3-col.l4.w3-margin-bottom
+			.w3-card
+				.w3-container
+					img.card-img-top-sm(src='./resources/img/profile.png' alt='profile pic')
+					h3  Employer Name
+					.form-group.row
+						label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Full Name
+						.col-sm-10
+							input#colFormLabelSm.form-control.form-control(type='email' placeholder='John Doe')
+					.form-group.row
+						label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Company
+						.col
+							input#colFormLabelSm.form-control.form-control(type='email' placeholder='Google')
+					.form-group.row
+						label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Email
+						.col
+							input#colFormLabelSm.form-control.form-control(type='email' placeholder='John.Doe@email.com')
+					.form-group
+						label(for='description') Bio
+						textarea#description.form-control(rows='3')
+					button.btn.btn-primary.mb-3(type='submit') Update
+					button.btn.btn-primary.mb-3(type='button' data-toggle='modal' data-target='#jobForm')
+						| Create Job
+		.w3-col.l4.w3-margin-bottom
+			.w3-card
+				.w3-container
+					h3  Jobs Created
+			// Modal
+			#jobForm.modal.fade(data-backdrop='false' tabindex='-1' role='dialog' aria-labelledby='jobFormLabel' aria-hidden='true')
+				.modal-dialog(role='document')
+					.modal-content
+						.modal-header
+							h5#exampleModalLabel.modal-title New Job
+							button.close(type='button' data-dismiss='modal' aria-label='Close')
+								span(aria-hidden='true') &times;
+						.modal-body
+							.form-group
+								label(for='title') Title
+								input#title.form-control(type='text' required='')
+							.form-group
+								label(for='description') Description
+								textarea#description.form-control(rows='3')
+							.form-group
+								label(for='briefDescription') Brief Description
+								textarea#briefDescription.form-control(rows='2')
+							.form-group
+								label(for='tags') Tags
+								input#tags.form-control(type='text')
+							.form-group
+								label Payment
+								.input-group.mb-3
+									.input-group-prepend
+										span.input-group-text $
+									input.form-control(type='text')
+							.form-group
+								label(for='rate') Difficulty
+								.form-group
+									.rate
+										input#star1(type='radio' name='rate' value='1')
+										label(for='star1' title='text')
+										input#star2(type='radio' name='rate' value='2')
+										label(for='star2' title='text')
+										input#star3(type='radio' name='rate' value='3')
+										label(for='star3' title='text')
+										input#star4(type='radio' name='rate' value='4')
+										label(for='star4' title='text')
+										input#star5(type='radio' name='rate' value='5')
+										label(for='star5' title='text')
+						.modal-footer
+							button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
+							button.btn.btn-primary(type='button') Submit
+script(src='script.js')
+script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')
