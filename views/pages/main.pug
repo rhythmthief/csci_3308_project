@@ -24,58 +24,76 @@ br
 br
 br
 .row
-	// Left side of the page?
+	// Left side of the page
 	#col0.col-2
 		.container
 			.card.bg-light.text-dark
 				.card-body
-					h5="Job Traits"
+					h5="Filters"
 					ul.list-group
 						li.list-group-item
 							p
-								strong Difficulty
+								strong Tags
 							form
 								.form-check
-									input#defaultCheck1.form-check-input(type='checkbox' value='')
+									input.form-check-input(type='checkbox' id='form_tag_c' name='form_tag_c')
 									label.form-check-label(for='defaultCheck1')
-										| 1
+										| C#
 								.form-check
-									input#defaultCheck2.form-check-input(type='checkbox' value='')
+									input.form-check-input(type='checkbox' id='form_tag_js' name='form_tag_js')
 									label.form-check-label(for='defaultCheck2')
-										| 2
+										| JavaScript
 								.form-check
-									input#defaultCheck2.form-check-input(type='checkbox' value='')
+									input.form-check-input(type='checkbox' id='form_tag_latex' name='form_tag_latex')
 									label.form-check-label(for='defaultCheck2')
-										| 3
-								.form-check
-									input#defaultCheck2.form-check-input(type='checkbox' value='')
-									label.form-check-label(for='defaultCheck2')
-										| 4
-								.form-check
-									input#defaultCheck2.form-check-input(type='checkbox' value='')
-									label.form-check-label(for='defaultCheck2')
-										| 5
+										| LaTeX
+
 						li.list-group-item
 							p
-								strong Due Date
+								strong Difficulty
 							.startDate
 								.row
-									.col-sm-6
+									.col-sm
 										.form-group
-											#datetimepicker1.input-group.date
-												input.form-control(type='text')
-												span.input-group-addon
-													span.glyphicon.glyphicon-calendar
+											input(type="range" value="0" min="0" max="5" step="1" class="form-control-range" name="form_difficulty" id="form_difficulty")
+											label(for="form_difficulty" class="pull-left")="Any"
+											label(for="form_difficulty" class="pull-right")="5"
+
+
+
+
 	// Right column, holds the job listings
 	#col1.col
+
+		.SearchBar
+		form(action="/main/search" method="post" id="form_search")
+
+			// Quick workaround to pass data from outside the form
+			input(name='form_tag_0' id="form_tag_0" required='' value="0" style="display:none")
+			input(name='form_tag_1' id="form_tag_1" required='' value="0" style="display:none")
+			input(name='form_tag_2' id="form_tag_2" required='' value="0" style="display:none")
+			input(name='form_diff' id="form_diff" required='' value="0" style="display:none")
+
+			div.row
+				div.col
+					input.form-control.mr-sm-2(type='text' name="form_job_name" placeholder='Job name...' required='')
+				div.col
+					button.btn.btn-dark(onclick="submitSearch()")="Search"
+
+		script.
+			function submitSearch()
+			{
+				console.log(document.getElementById("form_tag_c").checked);
+				document.getElementById("form_tag_0").value = document.getElementById("form_tag_c").checked;
+				document.getElementById("form_tag_1").value = document.getElementById("form_tag_js").checked;
+				document.getElementById("form_tag_2").value = document.getElementById("form_tag_latex").checked;
+				document.getElementById("form_diff").value = document.getElementById("form_difficulty").value;
+				document.getElementById("form_search").submit();
+			}
+
 		// Flex box to hold the job listings
 		#jobsBox.d-flex.flex-column.bd-highlight.mb-3
 			br
-			br
-			.SearchBar
-				form
-					input.form-control.mr-sm-2(type='text' placeholder='Company Search' required='')
-
 			if (mode == 0)
 				for job in jobs
 					div(class="p-2 bd-highlight")
@@ -122,9 +140,10 @@ br
 									form(action="/main" method="get")
 										button.btn.btn-dark(type="submit")="Back"
 								div.col
-									form(action="/main/accept" method="post")
-										input(name='job_id' required='' value=focusedJob[0].id style="display:none")
-										button.btn.btn-dark(type="submit")="Accept"
+									if (state == 1)
+										form(action="/main/accept" method="post")
+											input(name='job_id' required='' value=focusedJob[0].id style="display:none")
+											button.btn.btn-dark(type="submit")="Accept"
 
 //- Clientside scripts
-script(src='../resources/js/scripts.js')
+//- script(src='../resources/js/scripts.js')

@@ -1,0 +1,27 @@
+{
+  "name": "csci_3308_project",
+  "version": "1.0.0",
+  "description": "Team 3 Final Project",
+  "main": "server.js",
+  "dependencies": {
+    "ejs-lint": "^0.3.0",
+    "pg-promise": "^9.3.3",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhythmthief/csci_3308_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rhythmthief/csci_3308_project/issues"
+  },
+  "homepage": "https://github.com/rhythmthief/csci_3308_project#readme"
+}

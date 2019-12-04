@@ -13,7 +13,6 @@ acceptor smallint);
 create table if not exists login_info(                                     
     username varchar(50), 
     password varchar(50),  
-    id integer NOT NULL,
     usertype  varchar(1),
     userid integer,
     CONSTRAINT login_info_pkey PRIMARY KEY (id)

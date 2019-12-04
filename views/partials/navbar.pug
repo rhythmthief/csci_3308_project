@@ -36,22 +36,24 @@ style.
 // Navbar (sit on top)
 .w3-top
 	#myNavbar.w3-bar.w3-white.w3-card
-		a.w3-bar-item.w3-button.w3-wide(href='/main') ARBONSI
+		if (state != 0)
+			a.w3-bar-item.w3-button.w3-wide(href='/main') ARBONSI
+		else
+			a.w3-bar-item.w3-button.w3-wide(href='/') ARBONSI
+
 		// Right-sided navbar links
 		.w3-right
-			a.w3-bar-item.w3-button(href='/') ABOUT
-			a.w3-bar-item.w3-button(href='/#team')
-				i.fa.fa-user
-				|  TEAM
-			a.w3-bar-item.w3-button(href='/signin')
-				i.fa.fa-user-circle
-				|  LOGIN
-			a.w3-bar-item.w3-button(href='/signup_student')
-				i.fa.fa-user-plus
-				|  SIGN UP
-			a.w3-bar-item.w3-button(href='/student_profile')
-				i.fa.fa-user
-				|  St. Profile
-			a.w3-bar-item.w3-button(href='/employer_profile')
-				i.fa.fa-user
-				|  Em. Profile
+			a.w3-bar-item.w3-button(href='/') About Us
+			
+			if (state == 0)
+				a.w3-bar-item.w3-button(href='/signin')
+					i.fa.fa-user-circle
+					|  Sign In
+			else
+				a.w3-bar-item.w3-button(href='/profile')
+					i.fa.fa-user
+					|  Profile
+
+				a.w3-bar-item.w3-button(href='/signout')
+					i.fa.fa-sign-out
+					|  Sign Out

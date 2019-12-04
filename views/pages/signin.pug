@@ -27,13 +27,12 @@ br
 .container
 	.row
 		.col-md-5.mx-auto
-			form.form-signin(action='/login' method='post')
+			form.form-signin(action='/signin' method='post')
 				.text-center
 					img(src='../resources/img/logo.png' alt='emblem' height='130' width='130')
 					p
 					h1 Please sign in
-				
-				form(action='/login' method='post')
+
 					label.sr-only(for='inputEmail') Email address
 					input#inputEmail.form-control(type='email' placeholder='Email address' name="username" required='' autofocus='')
 					label.sr-only(for='inputPassword') Password
