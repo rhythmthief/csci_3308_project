@@ -22,10 +22,10 @@ const pgp = require('pg-promise')();
 
 const dbConfig = {
 	host: 'localhost',
-	port: 5432,
+	port: 53945,
 	database: 'arbonsi_db',
 	user: 'postgres',
-	password: 'J74?vW'
+	password: '123456'
 };
 
 let db = pgp(dbConfig);
@@ -59,6 +59,71 @@ app.get('/main', function (req, res) {
 				mode: 0,
 				jobs: ''
 			})
+		})
+});
+
+/* sign in page */
+app.post('/login',function(req,res){
+	var username = req.body.username;
+  var password = req.body.password;
+	//console.log(username)
+	//console.log(password)
+	query = "select usertype,userid from login_info where username='" + username +"' and password = '" +password +"' ;"
+	db.any(query)
+		.then(function(rows) {
+			if(rows.length == 1){
+				//if info inerted was match with the database record
+				var usertype = rows[0].usertype;
+				var userid = rows[0].userid;
+				//usertype = 1 represent as student, then user_id is student_table's key [student_id]
+				//usertype = 2 represent as employer, then user_id is employer's key [employer]
+				console.log(rows[0])
+				if(usertype == '1' ){
+					query_student = "SELECT * FROM students WHERE student_id="+userid+";"
+					query_jobs = "SELECT * FROM job INNER JOIN students ON job.id=ANY(students.accepted_jobs) WHERE students.student_id="+userid+";"
+
+					db.task('get-everything', task => {
+						return task.batch([
+							task.any(query_student),
+							task.any(query_jobs),
+						]);
+					})
+						.then(data => {
+							//console.log(data[1][0])
+							res.render('pages/student_profile', {
+								data_student: data[0][0],
+								data_jobs: data[1]
+							})
+						})
+				}else{
+					query_employer = "SELECT * FROM employers WHERE employer_id="+userid+";"
+					
+					db.task('get-everything', task => {
+						return task.batch([
+							task.any(query_employer),							
+						]);
+					})
+						.then(data => {
+							res.render('pages/employer_profile', {
+								query_employer: data[0][0],
+							})
+						})
+				}
+				/*res.render('pages/main',{
+					mode: 0,
+					jobs: ''
+					})*/
+			}else {
+				//if the info don't match, then send massage to user 
+				res.render('pages/signin',{
+					//�����Լ�д
+				})
+				
+			}
+		})
+		.catch(function(err){
+			console.log(err)
+			//TODO
 		})
 });
 
