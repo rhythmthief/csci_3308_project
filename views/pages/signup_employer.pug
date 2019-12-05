@@ -32,7 +32,7 @@ br
 						img(src='../resources/img/logo.png' class="card-img-top-sm" alt='emblem')
 						p
 						h5(style='font-family:Helvetica; text-align: left;') Create Your Employer Account
-				form(action='#' name='registration')
+				form(action='/signup_employer' method="post" name='registration'))
 					.form-group
 						label(for='exampleInputEmail1') Full Name
 						input#firstname.form-control(type='text' name='firstname' aria-describedby='emailHelp' required='')
