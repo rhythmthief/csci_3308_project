@@ -178,12 +178,6 @@ app.post('/main/accept', function (req, res) {
 	res.redirect('/main')
 });
 
-app.get('/signup_employer', function (req, res) {
-	res.render('pages/signup_employer', {
-		state: state
-	});
-});
-
 app.route('/signup_student')
 	.get((req, res) => {
 		res.render('pages/signup_student', {
@@ -218,6 +212,17 @@ app.route('/signup_student')
 				res.redirect('/signup_student');
 			})
 	});
+
+app.route('/signup_employer')
+  .get((req, res) => {
+    res.render('pages/signup_employer');
+  })
+  .post((req, res) => {
+    console.log("test");
+    query = "INSERT INTO employers(employer_name, company, employer_email) VALUES('" + req.body.firstname + "','" + req.body.company + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
+    db.any(query)
+    res.redirect('/main');
+  });
 
 /* Employer profile */
 app.get('/employer_profile', function (req, res) {
