@@ -3,8 +3,6 @@
 const express = require('express');
 let app = express();
 const pug = require('pug');
-app.set('view engine', 'pug');
-app.use(express.static(__dirname + '/'));
 const bodyParser = require('body-parser'); // Add the body-parser tool has been added
 app.use(bodyParser.json());              // Add support for JSON encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Add support for URL encoded bodies
@@ -16,14 +14,27 @@ var userId = 0;
 //Create Database Connection
 const pgp = require('pg-promise')();
 
-/* 
-	NOTES
-		- Change the password in dbConfig to your current postgres password (it's under Lab_Website 3). The password has to be DISPOSABLE, don't commit personal passwords
-*/
-
 const dbConfig = process.env.DATABASE_URL;
 
+// const dbConfig = {
+// 	host: 'localhost',
+// 	port: 5432,
+// 	database: 'arbonsi_db',
+// 	user: 'postgres',
+// 	password: 'J74?vW'
+// };
+
+
 var db = pgp(dbConfig);
+
+app.set('view engine', 'pug');
+app.use(express.static(__dirname + '/'));
+
+app.get('/', function (req, res) {
+	res.render('pages/start_page', {
+		state: state
+	})
+});
 
 /* Main page request */
 app.get('/main', function (req, res) {
@@ -165,12 +176,6 @@ app.post('/main/accept', function (req, res) {
 	query = "UPDATE students SET accepted_jobs = array_append(accepted_jobs,'" + req.body.job_id + "') WHERE id='" + userId + "'";
 	db.any(query)
 	res.redirect('/main')
-});
-
-app.get('/', function (req, res) {
-	res.render('pages/start_page', {
-		state: state
-	})
 });
 
 app.get('/signup_employer', function (req, res) {
