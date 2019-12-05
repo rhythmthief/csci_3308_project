@@ -15,16 +15,16 @@ var userId = 0;
 const pgp = require('pg-promise')();
 
 /* Switch between these dbConfigs when deploying locally or on Heroku */
-//const dbConfig = process.env.DATABASE_URL; //Heroku deployment
+const dbConfig = process.env.DATABASE_URL; //Heroku deployment
 
 //Local deployment
-const dbConfig = {
-	host: 'localhost',
-	port: 5432,
-	database: 'arbonsi_db',
-	user: 'postgres',
-	password: 'J74?vW'
-};
+// const dbConfig = {
+// 	host: 'localhost',
+// 	port: 5432,
+// 	database: 'arbonsi_db',
+// 	user: 'postgres',
+// 	password: 'J74?vW'
+// };
 
 
 var db = pgp(dbConfig);
@@ -292,5 +292,5 @@ app.get('/signout', function (req, res) {
 });
 
 /* Switch between these settings when deploying locally or on Heroku */
-//app.listen(process.env.PORT); //Heroku
-app.listen(3000); //Local deployment
+app.listen(process.env.PORT); //Heroku
+//app.listen(3000); //Local deployment
