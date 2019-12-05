@@ -5,9 +5,10 @@
   "main": "server.js",
   "dependencies": {
     "ejs-lint": "^0.3.0",
-	"pg-promise": "^9.3.3",
-	"express": "^4.6.1",
-    "pug": "^2.0.4"
+    "body-parser": "*",
+    "pg-promise": "*",
+    "express": "*",
+    "pug": "*"
   },
   "devDependencies": {},
   "scripts": {
@@ -19,7 +20,7 @@
     "url": "git+https://github.com/rhythmthief/csci_3308_project.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dennis Windham",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rhythmthief/csci_3308_project/issues"
