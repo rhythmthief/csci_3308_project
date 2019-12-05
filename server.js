@@ -270,5 +270,7 @@ app.get('/signout', function (req, res) {
 	res.redirect('/');
 });
 
-app.listen(3000);
-console.log('Listening to 3000');
+//app.listen(3000);
+//console.log('Listening to 3000');
+
+app.listen(process.env.PORT);
