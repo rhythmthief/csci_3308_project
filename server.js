@@ -21,18 +21,9 @@ const pgp = require('pg-promise')();
 		- Change the password in dbConfig to your current postgres password (it's under Lab_Website 3). The password has to be DISPOSABLE, don't commit personal passwords
 */
 
-const dbConfig = {
-	host: 'localhost',
-	port: 5432,
-	database: 'arbonsi_db',
-	user: 'postgres',
-	password: 'J74?vW'
-};
+const dbConfig = process.env.DATABASE_URL;
 
-let db = pgp(dbConfig);
-
-//Serverside scripts
-//const scripts_node = require('./resources/js/scripts_node.js');
+var db = pgp(dbConfig);
 
 /* Main page request */
 app.get('/main', function (req, res) {
