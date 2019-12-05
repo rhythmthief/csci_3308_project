@@ -14,15 +14,17 @@ var userId = 0;
 //Create Database Connection
 const pgp = require('pg-promise')();
 
-const dbConfig = process.env.DATABASE_URL;
+/* Switch between these dbConfigs when deploying locally or on Heroku */
+//const dbConfig = process.env.DATABASE_URL; //Heroku deployment
 
-// const dbConfig = {
-// 	host: 'localhost',
-// 	port: 5432,
-// 	database: 'arbonsi_db',
-// 	user: 'postgres',
-// 	password: 'J74?vW'
-// };
+//Local deployment
+const dbConfig = {
+	host: 'localhost',
+	port: 5432,
+	database: 'arbonsi_db',
+	user: 'postgres',
+	password: 'J74?vW'
+};
 
 
 var db = pgp(dbConfig);
@@ -46,7 +48,8 @@ app.get('/main', function (req, res) {
 			res.render('pages/main', {
 				mode: 0,
 				jobs: rows,
-				state: state
+				state: state,
+				forms: { tag0: 0, tag1: 0, tag2: 0, diff: 0, name: '' }
 			})
 		})
 		.catch(function (err) {
@@ -54,7 +57,91 @@ app.get('/main', function (req, res) {
 			res.render('pages/main', {
 				mode: 0,
 				jobs: '',
-				state: state
+				state: state,
+				forms: { tag0: 0, tag1: 0, tag2: 0, diff: 0, name: '' }
+			})
+		})
+});
+
+/* Main page */
+app.get('/main/view', function (req, res) {
+	var job_id = req.query.job_id;
+
+	query = "SELECT * FROM jobListing_full WHERE id=" + job_id + ";"
+
+	db.any(query)
+		.then(function (rows) {
+			res.render('pages/main', {
+				mode: 1,
+				my_title: "Main Page",
+				focusedJob: rows,
+				state: state,
+				forms: { tag0: 0, tag1: 0, tag2: 0, diff: 0, name: '' }
+			})
+		})
+		.catch(function (err) {
+			res.render('pages/main', {
+				mode: 1,
+				title: 'Main Page',
+				focusedJob: '',
+				state: state,
+				forms: { tag0: 0, tag1: 0, tag2: 0, diff: 0, name: '' }
+			})
+		})
+});
+
+/* Accepting a job from the student's perspective */
+app.post('/main/accept', function (req, res) {
+	//Updating array of accepted jobs for the student
+	query = "UPDATE students SET accepted_jobs = array_append(accepted_jobs,'" + req.body.job_id + "') WHERE id='" + userId + "'";
+	db.any(query)
+	res.redirect('/main')
+});
+
+/* Generates a new query based on search parameters, reloads the main page */
+app.post('/main/search', function (req, res) {
+
+	query = "SELECT * FROM job WHERE TRUE";
+	forms = { tag0: 0, tag1: 0, tag2: 0, diff: req.body.form_diff, name: req.body.form_job_name };
+
+	//Checking individual filter/search conditions
+	if (req.body.form_tag_0 == 'true') {
+		query = query + " AND 'C#'=ANY(tags)";
+		forms.tag0 = 1
+	}
+
+	if (req.body.form_tag_1 == 'true') {
+		query = query + " AND 'JavaScript'=ANY(tags)";
+		forms.tag1 = 1
+	}
+
+	if (req.body.form_tag_2 == 'true') {
+		query = query + " AND 'LaTeX'=ANY(tags)";
+		forms.tag2 = 1
+	}
+
+	if (parseInt(req.body.form_diff) > 0) //Pass if not 0
+		query = query + " AND '" + req.body.form_diff + "'<= difficulty";
+	if (req.body.form_job_name != '')
+		query = query + " AND title ~* '" + req.body.form_job_name + "'";
+	query = query + ";"
+
+	db.any(query)
+		.then(function (rows) {
+			res.render('pages/main', {
+				mode: 0,
+				jobs: rows,
+				state: state,
+				forms: forms //To set he old search parameters on reload for consistency
+			})
+		})
+		.catch(function (err) {
+			// Displays error message in case an error
+			res.render('pages/main', {
+				mode: 0,
+				jobs: '',
+				state: state,
+				forms: forms
 			})
 		})
 });
@@ -95,30 +182,6 @@ app.post('/signin', function (req, res) {
 		})
 });
 
-/* Main page */
-app.get('/main/view', function (req, res) {
-	var job_id = req.query.job_id;
-
-	query = "SELECT * FROM jobListing_full WHERE id=" + job_id + ";"
-
-	db.any(query)
-		.then(function (rows) {
-			res.render('pages/main', {
-				mode: 1,
-				my_title: "Main Page",
-				focusedJob: rows,
-				state: state
-			})
-		})
-		.catch(function (err) {
-			res.render('pages/main', {
-				mode: 1,
-				title: 'Main Page',
-				focusedJob: '',
-				state: state
-			})
-		})
-});
 
 /* Redirects to one of the profile types from here */
 app.get('/profile', function (req, res) {
@@ -169,15 +232,6 @@ app.post('/student_profile/update', function (req, res) {
 	res.redirect('/student_profile');
 });
 
-/* Accepting a job from the student's perspective 
-Currently defaults to student 1 as the acceptor */
-app.post('/main/accept', function (req, res) {
-	//Updating array of accepted jobs for the student
-	query = "UPDATE students SET accepted_jobs = array_append(accepted_jobs,'" + req.body.job_id + "') WHERE id='" + userId + "'";
-	db.any(query)
-	res.redirect('/main')
-});
-
 app.route('/signup_student')
 	.get((req, res) => {
 		res.render('pages/signup_student', {
@@ -214,15 +268,15 @@ app.route('/signup_student')
 	});
 
 app.route('/signup_employer')
-  .get((req, res) => {
-    res.render('pages/signup_employer');
-  })
-  .post((req, res) => {
-    console.log("test");
-    query = "INSERT INTO employers(employer_name, company, employer_email) VALUES('" + req.body.firstname + "','" + req.body.company + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
-    db.any(query)
-    res.redirect('/main');
-  });
+	.get((req, res) => {
+		res.render('pages/signup_employer');
+	})
+	.post((req, res) => {
+		console.log("test");
+		query = "INSERT INTO employers(employer_name, company, employer_email) VALUES('" + req.body.firstname + "','" + req.body.company + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
+		db.any(query)
+		res.redirect('/main');
+	});
 
 /* Employer profile */
 app.get('/employer_profile', function (req, res) {
@@ -231,51 +285,12 @@ app.get('/employer_profile', function (req, res) {
 	})
 });
 
-/* Test request */
-app.post('/main/search', function (req, res) {
-
-	query = "SELECT * FROM job WHERE TRUE";
-
-	//Checking individual filter/search conditions
-	if (req.body.form_tag_0 == 'true')
-		query = query + " AND 'C#'=ANY(tags)";
-
-	if (req.body.form_tag_1 == 'true')
-		query = query + " AND 'JavaScript'=ANY(tags)";
-
-	if (req.body.form_tag_2 == 'true')
-		query = query + " AND 'LaTeX'=ANY(tags)";
-
-	if (parseInt(req.body.form_diff) > 0) //Pass if not 0
-		query = query + " AND '" + req.body.form_diff + "'<= difficulty";
-	if (req.body.form_job_name != '')
-		query = query + " AND title ~* '" + req.body.form_job_name + "'";
-	query = query + ";"
-
-	db.any(query)
-		.then(function (rows) {
-			res.render('pages/main', {
-				mode: 0,
-				jobs: rows,
-				state: state
-			})
-		})
-		.catch(function (err) {
-			// Displays error message in case an error
-			res.render('pages/main', {
-				mode: 0,
-				jobs: '',
-				state: state
-			})
-		})
-});
-
+/* Signing out */
 app.get('/signout', function (req, res) {
 	state = 0;
 	res.redirect('/');
 });
 
-//app.listen(3000);
-//console.log('Listening to 3000');
-
-app.listen(process.env.PORT);
+/* Switch between these settings when deploying locally or on Heroku */
+//app.listen(process.env.PORT); //Heroku
+app.listen(3000); //Local deployment

@@ -36,15 +36,24 @@ br
 								strong Tags
 							form
 								.form-check
-									input.form-check-input(type='checkbox' id='form_tag_c' name='form_tag_c')
-									label.form-check-label(for='defaultCheck1')
+									if (forms.tag0)
+										input.form-check-input(type='checkbox' id='form_tag_c' name='form_tag_c' checked)
+									else
+										input.form-check-input(type='checkbox' id='form_tag_c' name='form_tag_c')
+									label.form-check-label
 										| C#
 								.form-check
-									input.form-check-input(type='checkbox' id='form_tag_js' name='form_tag_js')
+									if (forms.tag1)
+										input.form-check-input(type='checkbox' id='form_tag_js' name='form_tag_js' checked)
+									else
+										input.form-check-input(type='checkbox' id='form_tag_js' name='form_tag_js')
 									label.form-check-label(for='defaultCheck2')
 										| JavaScript
 								.form-check
-									input.form-check-input(type='checkbox' id='form_tag_latex' name='form_tag_latex')
+									if (forms.tag2)
+										input.form-check-input(type='checkbox' id='form_tag_latex' name='form_tag_latex' checked)
+									else
+										input.form-check-input(type='checkbox' id='form_tag_latex' name='form_tag_latex')
 									label.form-check-label(for='defaultCheck2')
 										| LaTeX
 
@@ -55,12 +64,9 @@ br
 								.row
 									.col-sm
 										.form-group
-											input(type="range" value="0" min="0" max="5" step="1" class="form-control-range" name="form_difficulty" id="form_difficulty")
+											input(type="range" value=forms.diff min="0" max="5" step="1" class="form-control-range" name="form_difficulty" id="form_difficulty")
 											label(for="form_difficulty" class="pull-left")="Any"
 											label(for="form_difficulty" class="pull-right")="5"
-
-
-
 
 	// Right column, holds the job listings
 	#col1.col
@@ -76,7 +82,7 @@ br
 
 			div.row
 				div.col
-					input.form-control.mr-sm-2(type='text' name="form_job_name" placeholder='Job name...' required='')
+					input.form-control.mr-sm-2(type='text' name="form_job_name" placeholder='Job name...' required='' value=forms.name)
 				div.col
 					button.btn.btn-dark(onclick="submitSearch()")="Search"
 
