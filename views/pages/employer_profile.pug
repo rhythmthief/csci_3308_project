@@ -84,74 +84,100 @@ style.
 			.w3-card
 				.w3-container
 					img.card-img-top-sm(src='./resources/img/profile.png' alt='profile pic')
-					h3  Employer Name
-					.form-group.row
-						label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Full Name
-						.col-sm-10
-							input#colFormLabelSm.form-control.form-control(type='email' placeholder='John Doe')
-					.form-group.row
-						label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Company
-						.col
-							input#colFormLabelSm.form-control.form-control(type='email' placeholder='Google')
-					.form-group.row
-						label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Email
-						.col
-							input#colFormLabelSm.form-control.form-control(type='email' placeholder='John.Doe@email.com')
-					.form-group
-						label(for='description') Bio
-						textarea#description.form-control(rows='3')
-					button.btn.btn-primary.mb-3(type='submit') Update
-					button.btn.btn-primary.mb-3(type='button' data-toggle='modal' data-target='#jobForm')
-						| Create Job
+					h3=data_employer.employer_name
+					form(action="/employer_profile/update" method="post")
+						.form-group.row
+							label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Full Name
+							.col-sm-10
+								input#colFormLabelSm.form-control.form-control(type='text' name='form_name' placeholder='John Doe' value=data_employer.employer_name)
+						.form-group.row
+							label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Company
+							.col
+								input#colFormLabelSm.form-control.form-control(type='tex' name='form_company' placeholder='Company name...' value=data_employer.company)
+						.form-group.row
+							label.col-sm-2.col-form-label.col-form-label-sm(for='colFormLabelSm') Email
+							.col
+								input#colFormLabelSm.form-control.form-control(type='email' name='form_email' placeholder='John.Doe@email.com' value=data_employer.employer_email)
+						.form-group
+							label(for='description') Bio
+							textarea#description.form-control(rows='3' name='form_bio' maxlength="250")=data_employer.about_employer
+						button.btn.btn-primary.mb-3(type='submit') Update
+		
 		.w3-col.l4.w3-margin-bottom
 			.w3-card
 				.w3-container
-					h3  Jobs Created
-			// Modal
-			#jobForm.modal.fade(data-backdrop='false' tabindex='-1' role='dialog' aria-labelledby='jobFormLabel' aria-hidden='true')
-				.modal-dialog(role='document')
-					.modal-content
-						.modal-header
-							h5#exampleModalLabel.modal-title New Job
-							button.close(type='button' data-dismiss='modal' aria-label='Close')
-								span(aria-hidden='true') &times;
-						.modal-body
+					br
+					h3 New Job
+					form(action="/employer_profile/new_job" method="post")
+						.form-group
+							label(for='title') Title
+							input#title.form-control(type='text' required='' maxlength='50' name='job_title')
+						.form-group
+							label(for='description') Description
+							textarea#description.form-control(rows='3' required='' maxlength='500' name='job_desc')
+						.form-group
+							label(for='briefDescription') Brief Description
+							textarea#briefDescription.form-control(rows='2' required='' maxlength='250' name='job_brief')
+						.form-group
+							label(for='tags') Tags
+							.form-check
+								input.form-check-input(type='checkbox' name='job_tag_c')
+								label.form-check-label
+									| C#
+							.form-check
+								input.form-check-input(type='checkbox' name='job_tag_js')
+								label.form-check-label
+									| JavaScript
+							.form-check
+								input.form-check-input(type='checkbox' name='job_tag_latex')
+								label.form-check-label
+									| LaTeX
+
+						.form-group
+							label Payment
+							.input-group.mb-3
+								.input-group-prepend
+									span.input-group-text $
+								input.form-control(type='number' required='' min='0' max='10000' name='job_payment')
+						.form-group
+							label(for='rate') Difficulty
 							.form-group
-								label(for='title') Title
-								input#title.form-control(type='text' required='')
-							.form-group
-								label(for='description') Description
-								textarea#description.form-control(rows='3')
-							.form-group
-								label(for='briefDescription') Brief Description
-								textarea#briefDescription.form-control(rows='2')
-							.form-group
-								label(for='tags') Tags
-								input#tags.form-control(type='text')
-							.form-group
-								label Payment
-								.input-group.mb-3
-									.input-group-prepend
-										span.input-group-text $
-									input.form-control(type='text')
-							.form-group
-								label(for='rate') Difficulty
-								.form-group
-									.rate
-										input#star1(type='radio' name='rate' value='1')
-										label(for='star1' title='text')
-										input#star2(type='radio' name='rate' value='2')
-										label(for='star2' title='text')
-										input#star3(type='radio' name='rate' value='3')
-										label(for='star3' title='text')
-										input#star4(type='radio' name='rate' value='4')
-										label(for='star4' title='text')
-										input#star5(type='radio' name='rate' value='5')
-										label(for='star5' title='text')
-						.modal-footer
-							button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
-							button.btn.btn-primary(type='button') Submit
-script(src='script.js')
+								.rate
+									input#star1(type='radio' name='rate' value='1' checked)
+									label(for='star1' title='text')
+									input#star2(type='radio' name='rate' value='2')
+									label(for='star2' title='text')
+									input#star3(type='radio' name='rate' value='3')
+									label(for='star3' title='text')
+									input#star4(type='radio' name='rate' value='4')
+									label(for='star4' title='text')
+									input#star5(type='radio' name='rate' value='5')
+									label(for='star5' title='text')
+						button.btn.btn-primary(type='submit') Submit
+		
+		.w3-col.l4.w3-margin-bottom
+			.w3-card
+				.w3-container
+					.w3-center
+						br
+						h3 Jobs Created
+						for job in data_jobs
+							div(class="p-2 bd-highlight")
+								form(action="/main/view" method="get")
+									button.btn.btn-link.btn-block(type="submit" name="job_id", value= job.id data-toggle="tooltip" data-placement="right" title="Learn more")
+										div(class="card bg-light text-dark")
+											div(class="card-body")
+												table
+													tr
+														th=job.title
+														td(style="padding-left:20px; padding-right:20px") |
+														td=job.deadline
+														td(style="padding-left:20px; padding-right:20px") |
+														td="Difficulty: " + job.difficulty
+														td(style="padding-left:20px; padding-right:20px") |
+														td=job.brief_description
+						br
+
 script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js')
 script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js')
 script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js')

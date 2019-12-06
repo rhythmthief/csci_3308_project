@@ -67,7 +67,7 @@ app.get('/main', function (req, res) {
 app.get('/main/view', function (req, res) {
 	var job_id = req.query.job_id;
 
-	query = "SELECT * FROM jobListing_full WHERE id=" + job_id + ";"
+	query = "SELECT id, title, difficulty, deadline, description,payment,tags,about_employer,company,employer_email,employer_name FROM job INNER JOIN employers ON job.id=ANY(employers.created_jobs) WHERE id=" + job_id + ";"
 
 	db.any(query)
 		.then(function (rows) {
@@ -201,6 +201,7 @@ app.get('/student_profile', function (req, res) {
 	query_student = "SELECT * FROM students WHERE id='" + userId + "';";
 	query_jobs = "SELECT * FROM job INNER JOIN students ON job.id=ANY(students.accepted_jobs) WHERE students.id='" + userId + "';";
 
+	/* Checks to make sure the student is signed in */
 	if (state == 1) {
 		db.task('get-everything', task => {
 			return task.batch([
@@ -218,7 +219,6 @@ app.get('/student_profile', function (req, res) {
 	}
 	else
 		res.redirect('/');
-
 });
 
 /* Student profile update */
@@ -240,49 +240,63 @@ app.route('/signup_student')
 	})
 	.post((req, res) => {
 		//Inserts student profile info
-		query0 = "INSERT INTO students(student_name, school, student_email) VALUES('" + req.body.full_name + "','" + req.body.school + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
 
-		//Inserts login info
-		query1 = "INSERT INTO login_info(username, password, usertype, userid) SELECT '" + req.body.email + "','" + req.body.password + "','1', id FROM students ORDER BY id DESC LIMIT 1;";
+		query_check = "select count(*) from login_info where username='" + req.body.email + "';"
 
-		//Retrieves the new user id within the db
-		query2 = "SELECT id FROM students ORDER BY id DESC LIMIT 1;"
+		db.any(query_check)
+			.then(function (rows) {
+				//Making sure there is no user under this name
+				if (rows[0].count == 0) {
 
-		db.task('get-everything', task => {
-			return task.batch([
-				task.any(query0),
-				task.any(query1),
-				task.any(query2),
-			]);
-		})
-			//Technically useless, but I want to make sure I'm not redirecting in vain
-			.then(data => {
-				state = 1;
-				userId = data[2][0].id;
-				res.redirect('/profile');
-			})
+					query0 = "INSERT INTO students(student_name, school, student_email) VALUES('" + req.body.full_name + "','" + req.body.school + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
 
-			.catch(function (err) {
-				res.redirect('/signup_student');
-			})
+					//Inserts login info
+					query1 = "INSERT INTO login_info(username, password, usertype, userid) SELECT '" + req.body.email + "','" + req.body.password + "','1', id FROM students ORDER BY id DESC LIMIT 1;";
+
+					//Retrieves the new user id within the db
+					query2 = "SELECT id FROM students ORDER BY id DESC LIMIT 1;"
+
+					db.task('get-everything', task => {
+						return task.batch([
+							task.any(query0),
+							task.any(query1),
+							task.any(query2),
+						]);
+					})
+						//Technically useless, but I want to make sure I'm not redirecting in vain
+						.then(data => {
+							state = 1;
+							userId = data[2][0].id;
+							res.redirect('/profile');
+						})
+
+						.catch(function (err) {
+							res.redirect('/signup_student');
+						})
+				}
+				else {
+					res.redirect('/signup_student');
+				}
+			});
 	});
-
-
 
 /* EMPLOYER PROFILE */
 app.get('/employer_profile', function (req, res) {
-  query_employer = "SELECT * FROM employers WHERE id='" + userId + "';";
-  if (state == 1) {
+	query_employer = "SELECT * FROM employers WHERE employer_id='" + userId + "';";
+	query_jobs = "SELECT * FROM job INNER JOIN employers ON job.id=ANY(employers.created_jobs) WHERE employers.employer_id='" + userId + "';";
+
+	/* Checks to make sure the employer is signed in */
+	if (state == 2) {
 		db.task('get-everything', task => {
 			return task.batch([
 				task.any(query_employer),
-				//task.any(query_jobs),
+				task.any(query_jobs),
 			]);
 		})
 			.then(data => {
-				res.render('pages/student_profile', {
-					data_student: data[0][0],
-					//data_jobs: data[1],
+				res.render('pages/employer_profile', {
+					data_employer: data[0][0],
+					data_jobs: data[1],
 					state: state
 				})
 			})
@@ -291,33 +305,98 @@ app.get('/employer_profile', function (req, res) {
 		res.redirect('/');
 });
 
-app.post('employer_profile/update', function (req, res) {
-  query0 = "UPDATE employers SET employer_name='" + req.body.firstname + "', company='" + req.body.company + "', student_email='" + req.body.email + "', about_me='" + req.body.form_bio + "' WHERE id='" + userId + "';";
-	query1 = "UPDATE login_info SET username='" + req.body.email + "' WHERE usertype='1' AND userid='" + userId + "';";
+/* Updates employer profile */
+app.post('/employer_profile/update', function (req, res) {
+	query0 = "UPDATE employers SET employer_name='" + req.body.form_name + "', company='" + req.body.form_company + "', employer_email='" + req.body.form_email + "', about_employer='" + req.body.form_bio + "' WHERE employer_id='" + userId + "';";
+	query1 = "UPDATE login_info SET username='" + req.body.form_email + "' WHERE usertype='2' AND userid='" + userId + "';";
 
 	db.any(query0);
 	db.any(query1);
 
-	res.redirect('/student_profile');
+	res.redirect('/employer_profile');
 });
 
+/* Adding a new job to the database */
+app.post('/employer_profile/new_job', function (req, res) {
+
+	// Generating tags
+	temp = "{"
+	if (req.body.job_tag_c == 'on')
+		temp = temp + "C#,";
+	if (req.body.job_tag_js == 'on')
+		temp = temp + "JavaScript,";
+	if (req.body.job_tag_latex == 'on')
+		temp = temp + "LaTeX,";
+
+	if (temp != "{")
+		temp = temp.substring(0, temp.length - 1);
+	temp = temp + "}"
+
+	query0 = "INSERT INTO job(title, description, brief_description, difficulty, payment, deadline, creator, tags) VALUES ('" + req.body.job_title + "','" + req.body.job_desc + "','" + req.body.job_brief + "','" + req.body.rate + "','" + req.body.job_payment + "', '01-01-2077','" + userId + "','" + temp + "');"
+
+	query1 = "SELECT id FROM job ORDER BY id DESC LIMIT 1;"
+
+	db.task('get-everything', task => {
+		return task.batch([
+			task.any(query0),
+			task.any(query1),
+		]);
+	})
+		.then(data => {
+			query2 = "UPDATE employers SET created_jobs = array_append(created_jobs,'" + data[1][0].id + "') WHERE employer_id='" + userId + "'";
+			db.any(query2)
+		})
+
+	res.redirect('/profile');
+});
+
+/* employer signup page */
 app.route('/signup_employer')
 	.get((req, res) => {
 		res.render('pages/signup_employer');
 	})
+	//Inserts employer profile info
 	.post((req, res) => {
-		console.log("test");
-		query = "INSERT INTO employers(employer_name, company, employer_email) VALUES('" + req.body.firstname + "','" + req.body.company + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
-		db.any(query)
-		res.redirect('/main');
-	});
 
-/* Employer profile */
-app.get('/employer_profile', function (req, res) {
-	res.render('pages/employer_profile', {
-		state: state
-	})
-});
+		query_check = "select count(*) from login_info where username='" + req.body.email + "';"
+
+		db.any(query_check)
+			.then(function (rows) {
+				//Making sure there is no user under this name
+				if (rows[0].count == 0) {
+
+					query0 = "INSERT INTO employers(employer_name, company, employer_email) VALUES('" + req.body.firstname + "','" + req.body.company + "','" + req.body.email + "') ON CONFLICT DO NOTHING;";
+
+					//Inserts login info
+					query1 = "INSERT INTO login_info(username, password, usertype, userid) SELECT '" + req.body.email + "','" + req.body.password + "','2', employer_id FROM employers ORDER BY employer_id DESC LIMIT 1;";
+
+					//Retrieves the new user id within the db
+					query2 = "SELECT employer_id FROM employers ORDER BY employer_id DESC LIMIT 1;"
+
+					db.task('get-everything', task => {
+						return task.batch([
+							task.any(query0),
+							task.any(query1),
+							task.any(query2),
+						]);
+					})
+						//Technically useless, but I want to make sure I'm not redirecting in vain
+						.then(data => {
+							state = 2;
+							userId = data[2][0].employer_id;
+
+							res.redirect('/profile');
+						})
+
+						.catch(function (err) {
+							res.redirect('/signup_employer');
+						})
+				}
+				else {
+					res.redirect('/signup_employer');
+				}
+			});
+	});
 
 /* Signing out */
 app.get('/signout', function (req, res) {
