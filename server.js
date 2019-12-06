@@ -267,6 +267,40 @@ app.route('/signup_student')
 			})
 	});
 
+
+
+/* EMPLOYER PROFILE */
+app.get('/employer_profile', function (req, res) {
+  query_employer = "SELECT * FROM employers WHERE id='" + userId + "';";
+  if (state == 1) {
+		db.task('get-everything', task => {
+			return task.batch([
+				task.any(query_employer),
+				//task.any(query_jobs),
+			]);
+		})
+			.then(data => {
+				res.render('pages/student_profile', {
+					data_student: data[0][0],
+					//data_jobs: data[1],
+					state: state
+				})
+			})
+	}
+	else
+		res.redirect('/');
+});
+
+app.post('employer_profile/update', function (req, res) {
+  query0 = "UPDATE employers SET employer_name='" + req.body.firstname + "', company='" + req.body.company + "', student_email='" + req.body.email + "', about_me='" + req.body.form_bio + "' WHERE id='" + userId + "';";
+	query1 = "UPDATE login_info SET username='" + req.body.email + "' WHERE usertype='1' AND userid='" + userId + "';";
+
+	db.any(query0);
+	db.any(query1);
+
+	res.redirect('/student_profile');
+});
+
 app.route('/signup_employer')
 	.get((req, res) => {
 		res.render('pages/signup_employer');
