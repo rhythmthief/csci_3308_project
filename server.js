@@ -66,6 +66,7 @@ app.get('/main', function (req, res) {
 /* Main page */
 app.get('/main/view', function (req, res) {
 	var job_id = req.query.job_id;
+	console.log(job_id)
 
 	query = "SELECT id, title, difficulty, deadline, description,payment,tags,about_employer,company,employer_email,employer_name FROM job INNER JOIN employers ON job.id=ANY(employers.created_jobs) WHERE id=" + job_id + ";"
 
@@ -199,7 +200,7 @@ app.get('/profile', function (req, res) {
 /* Student profile page */
 app.get('/student_profile', function (req, res) {
 	query_student = "SELECT * FROM students WHERE id='" + userId + "';";
-	query_jobs = "SELECT * FROM job INNER JOIN students ON job.id=ANY(students.accepted_jobs) WHERE students.id='" + userId + "';";
+	query_jobs = "SELECT job.id,job.title,job.deadline,job.difficulty,job.brief_description  FROM job INNER JOIN students ON job.id=ANY(students.accepted_jobs) WHERE students.id='" + userId + "';";
 
 	/* Checks to make sure the student is signed in */
 	if (state == 1) {
@@ -210,6 +211,7 @@ app.get('/student_profile', function (req, res) {
 			]);
 		})
 			.then(data => {
+				console.log(data[1])
 				res.render('pages/student_profile', {
 					data_student: data[0][0],
 					data_jobs: data[1],
