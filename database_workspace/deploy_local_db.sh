@@ -1,5 +1,13 @@
 #!/bin/bash
 
+##############################
+# Creates and populates all  #
+# database tables for local  #
+# deployment.                #
+##############################
+
+# Usage: ./deploy_local_db.sh
+
 ### Database Section ###
 declare -a QUERIES
 QUERIES[0]="DROP DATABASE IF EXISTS arbonsi_db;"

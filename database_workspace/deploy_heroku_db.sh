@@ -1,5 +1,16 @@
 #!/bin/bash
 
+##############################
+# Creates and populates all  #
+# database tables for heroku #
+# deployment.                #
+##############################
+
+# Usage: ./deploy_heroku_db.sh [heroku-app-name]
+
+# Passed appname
+APPNAME=$1
+
 ### Database Section ###
 declare -a QUERIES
 QUERIES[0]="DROP VIEW jobListing_preview;"
@@ -19,6 +30,13 @@ QUERIES[13]="CREATE VIEW jobListing_full AS SELECT id, title, difficulty, deadli
 QUERIES[14]="CREATE VIEW employer_profile AS SELECT employer_name, company, about_employer, employer_email FROM employers;"
 QUERIES[15]="CREATE VIEW student_profile AS SELECT student_name, skills, about_me, school, student_email FROM students;"
 
+if [ -z ""$APPNAME ]
+then
+     echo -e "Error: app name empty\nUsage: ./deploy_heroku_db.sh [app-name]"
+	 exit
+fi
+
+
 #Makes sure all files are present in the directory before starting
 if test -f "$PWD/NAMES.txt" && test -f "$PWD/PLACES.txt" && test -f "$PWD/ACRONYMS.txt";
 then
@@ -27,9 +45,9 @@ then
      do
           if [[ $i < 4 ]] #Drops and creates the database
           then
-               echo "${QUERIES[$i]}" | heroku pg:psql -a arcane-journey-49452 # Dropping a pre-existing database, creating a new one
+               echo "${QUERIES[$i]}" | heroku pg:psql -a $APPNAME # Dropping a pre-existing database, creating a new one
           else
-               echo "${QUERIES[$i]}" | heroku pg:psql -a arcane-journey-49452 #Creating tables and views
+               echo "${QUERIES[$i]}" | heroku pg:psql -a $APPNAME #Creating tables and views
           fi
      done
      
@@ -62,7 +80,7 @@ then
           tags=${tags::-1}"}"
           
           # Inserts job entries
-          echo "INSERT INTO job(title, description, brief_description, difficulty, payment, deadline, tags, creator) VALUES ('Job $i', 'A long description of the job. The student will be able to admire the great effort put into the extremely detailed and sophisticated details regarding the project requirements.', 'Brief description for the preview.', $(($RANDOM % 5+1)), $(($RANDOM % 1000)), '01-01-2077', '$tags',$i);" | heroku pg:psql -a arcane-journey-49452
+          echo "INSERT INTO job(title, description, brief_description, difficulty, payment, deadline, tags, creator) VALUES ('Job $i', 'A long description of the job. The student will be able to admire the great effort put into the extremely detailed and sophisticated details regarding the project requirements.', 'Brief description for the preview.', $(($RANDOM % 5+1)), $(($RANDOM % 1000)), '01-01-2077', '$tags',$i);" | heroku pg:psql -a $APPNAME
           
           # Employers section
           tempName=$(shuf -n 1 NAMES.txt | tr -d '\r'\') # Rolls a random name, truncates escape characters
@@ -70,15 +88,15 @@ then
           tempEmail=$tempName"@"$(echo $tempCompany | tr -d ' ')".com" #Employer email
           
           # Adds employer entries to employers table
-          echo "INSERT INTO employers(employer_name,about_employer,company,employer_email,created_jobs) VALUES ('$tempName', 'Greatest employer on Earth.', '$tempCompany', '$tempEmail', '{$i}');" | heroku pg:psql -a arcane-journey-49452
+          echo "INSERT INTO employers(employer_name,about_employer,company,employer_email,created_jobs) VALUES ('$tempName', 'Greatest employer on Earth.', '$tempCompany', '$tempEmail', '{$i}');" | heroku pg:psql -a $APPNAME
           
           # Adds login info to login_imfo table
-          echo "INSERT INTO login_info(username, password, usertype, userid) VALUES ('$tempEmail', '123', '2', '$i')" | heroku pg:psql -a arcane-journey-49452
+          echo "INSERT INTO login_info(username, password, usertype, userid) VALUES ('$tempEmail', '123', '2', '$i')" | heroku pg:psql -a $APPNAME
      done
      
      #First user insert to avoid breaking the website
-     echo "INSERT INTO students(student_name, school, student_email, about_me) VALUES ('Dennis', 'CU Boulder', 'test_email@gmail.com', 'Memes interlinked.');" | heroku pg:psql -a arcane-journey-49452
-     echo "INSERT INTO login_info (username, password, usertype, userid) VALUES ('test_email@gmail.com', '123','1','1')" | heroku pg:psql -a arcane-journey-49452
+     echo "INSERT INTO students(student_name, school, student_email, about_me) VALUES ('Dennis', 'CU Boulder', 'test_email@gmail.com', 'Memes interlinked.');" | heroku pg:psql -a $APPNAME
+     echo "INSERT INTO login_info (username, password, usertype, userid) VALUES ('test_email@gmail.com', '123','1','1')" | heroku pg:psql -a $APPNAME
      
 else
      echo "One or more of the dictionaries are missing. Make sure ACRONYMS.TXT, NAMES.TXT and PLACES.TXT are next to deployDB.sh. Also make sure you are executing the script from project_dir/database_workspace/"
