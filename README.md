@@ -2,17 +2,17 @@
 
 Arbonsi is a freelancing website targeting Computer Science students. The website was primarily designed to enable students to find small jobs that could potentially lead to full-time employment.  
 
-This website is easy to use and helps you find projects that fit your level of language expertise and preference. Our website enables students to gain new knowledge and experience, as well as get paid for completing assignments created by registered employers. The key benefit of using Arbonsi over its competitors is that jobs posted on this website are created with CU students in mind, so that they can gain exposure, as well as fill gaps in their resumes for future full-time employment.
+In and of itself, Arbonsi is easy to use and helps you find projects that fit your level of language expertise and preference. Our website enables students to gain new knowledge and experience, as well as get paid for completing assignments created by registered employers. The key benefit of using Arbonsi over its competitors is that jobs posted on this website are created with CU students in mind, so that they can gain exposure, as well as fill gaps in their resumes for future full-time employment.
 
-# Deployment
+## Deployment
 
-## Prerequisites
+### Prerequisites
 * GNU/Linux OS
 * postgres
 
-## Heroku Deployment
+### Heroku Deployment
 
-By default, the website is meant to be deployed in a Heroku dyno. Create a new application on Heroku and add `Heroku Postgres` as a resource.
+By default, the website is meant to be deployed in a Heroku dyno. Create a new application on Heroku and add _Heroku Postgres_ as a resource.
 
 To initialize the database, `cd` into the project directory and run:
 ~~~~
@@ -33,7 +33,7 @@ git push heroku master
 ~~~~
 The app should now be available at [heroku-app-name].herokuapp.com
 
-## Local Deployment
+### Local Deployment
 Change the following lines in server.js to reflect your local settings (see comments):
  ~~~~
  const dbConfig = process.env.DATABASE_URL;
@@ -51,6 +51,6 @@ Change the following lines in server.js to reflect your local settings (see comm
 
 
 
-# Sources 
+## Sources 
 ### Dictionaries
 Ward, G. (2002). Moby Word Lists. Retrieved from http://www.gutenberg.org/ebooks/3201.
