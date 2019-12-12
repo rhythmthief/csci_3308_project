@@ -1,6 +1,12 @@
 /* Arbonsi server file */
 
-const express = require('express');
+/*	Notes:
+		Due to time constraints, login functionality is only partially complete. 
+		There is no proper encryption and state/userid are being stored as global variables within the app.
+		Amusingly, as a result, in its current shape the website supports only one active user at a time.
+*/
+
+const express = require('express'); //Express module for actual web functionality
 let app = express();
 const pug = require('pug');
 const bodyParser = require('body-parser'); // Add the body-parser tool has been added
@@ -32,6 +38,7 @@ var db = pgp(dbConfig);
 app.set('view engine', 'pug');
 app.use(express.static(__dirname + '/'));
 
+/* Start page */
 app.get('/', function (req, res) {
 	res.render('pages/start_page', {
 		state: state
@@ -41,7 +48,7 @@ app.get('/', function (req, res) {
 /* Main page request */
 app.get('/main', function (req, res) {
 
-	query = "SELECT * FROM jobListing_preview;"
+	query = "SELECT * FROM jobListing_preview;" //Query to fetch job previews
 
 	db.any(query)
 		.then(function (rows) {
@@ -63,10 +70,9 @@ app.get('/main', function (req, res) {
 		})
 });
 
-/* Main page */
+/* Main page focused job */
 app.get('/main/view', function (req, res) {
 	var job_id = req.query.job_id;
-	console.log(job_id)
 
 	query = "SELECT id, title, difficulty, deadline, description,payment,tags,about_employer,company,employer_email,employer_name FROM job INNER JOIN employers ON job.id=ANY(employers.created_jobs) WHERE id=" + job_id + ";"
 
@@ -121,11 +127,15 @@ app.post('/main/search', function (req, res) {
 		forms.tag2 = 1
 	}
 
+	//Difficulty
 	if (parseInt(req.body.form_diff) > 0) //Pass if not 0
 		query = query + " AND '" + req.body.form_diff + "'<= difficulty";
+
+	//name
 	if (req.body.form_job_name != '')
 		query = query + " AND title ~* '" + req.body.form_job_name + "'";
-	query = query + ";"
+
+	query = query + ";" //Closing the query
 
 	db.any(query)
 		.then(function (rows) {
@@ -133,7 +143,7 @@ app.post('/main/search', function (req, res) {
 				mode: 0,
 				jobs: rows,
 				state: state,
-				forms: forms //To set he old search parameters on reload for consistency
+				forms: forms //To set the old search parameters on reload for consistency
 			})
 		})
 		.catch(function (err) {
@@ -186,7 +196,7 @@ app.post('/signin', function (req, res) {
 
 /* Redirects to one of the profile types from here */
 app.get('/profile', function (req, res) {
-
+	//Checks the state
 	if (state != 0) {
 		if (state == 1)
 			res.redirect('/student_profile');
@@ -211,7 +221,6 @@ app.get('/student_profile', function (req, res) {
 			]);
 		})
 			.then(data => {
-				console.log(data[1])
 				res.render('pages/student_profile', {
 					data_student: data[0][0],
 					data_jobs: data[1],
@@ -220,7 +229,7 @@ app.get('/student_profile', function (req, res) {
 			})
 	}
 	else
-		res.redirect('/');
+		res.redirect('/'); //redirect to landing page if not signed in or wrong user type
 });
 
 /* Student profile update */
@@ -228,12 +237,14 @@ app.post('/student_profile/update', function (req, res) {
 	query0 = "UPDATE students SET student_name='" + req.body.form_name + "', school='" + req.body.form_school + "', student_email='" + req.body.form_email + "', about_me='" + req.body.form_bio + "' WHERE id='" + userId + "';";
 	query1 = "UPDATE login_info SET username='" + req.body.form_email + "' WHERE usertype='1' AND userid='" + userId + "';";
 
+	//Sending queries to update profile info
 	db.any(query0);
 	db.any(query1);
 
 	res.redirect('/student_profile');
 });
 
+/* Student signup page */
 app.route('/signup_student')
 	.get((req, res) => {
 		res.render('pages/signup_student', {
@@ -241,8 +252,7 @@ app.route('/signup_student')
 		});
 	})
 	.post((req, res) => {
-		//Inserts student profile info
-
+		//Query to insert student profile info
 		query_check = "select count(*) from login_info where username='" + req.body.email + "';"
 
 		db.any(query_check)
@@ -282,7 +292,7 @@ app.route('/signup_student')
 			});
 	});
 
-/* EMPLOYER PROFILE */
+/* Employer Profile */
 app.get('/employer_profile', function (req, res) {
 	query_employer = "SELECT * FROM employers WHERE employer_id='" + userId + "';";
 	query_jobs = "SELECT * FROM job INNER JOIN employers ON job.id=ANY(employers.created_jobs) WHERE employers.employer_id='" + userId + "';";
@@ -304,14 +314,15 @@ app.get('/employer_profile', function (req, res) {
 			})
 	}
 	else
-		res.redirect('/');
+		res.redirect('/'); //redirect to landing page if not signed in or wrong user type
 });
 
-/* Updates employer profile */
+/* Update employer profile */
 app.post('/employer_profile/update', function (req, res) {
 	query0 = "UPDATE employers SET employer_name='" + req.body.form_name + "', company='" + req.body.form_company + "', employer_email='" + req.body.form_email + "', about_employer='" + req.body.form_bio + "' WHERE employer_id='" + userId + "';";
 	query1 = "UPDATE login_info SET username='" + req.body.form_email + "' WHERE usertype='2' AND userid='" + userId + "';";
 
+	//Updating database entries
 	db.any(query0);
 	db.any(query1);
 
@@ -330,12 +341,13 @@ app.post('/employer_profile/new_job', function (req, res) {
 	if (req.body.job_tag_latex == 'on')
 		temp = temp + "LaTeX,";
 
-	if (temp != "{")
+	if (temp != "{") //Dodging an edge case and removing comma at the end
 		temp = temp.substring(0, temp.length - 1);
 	temp = temp + "}"
 
 	query0 = "INSERT INTO job(title, description, brief_description, difficulty, payment, deadline, creator, tags) VALUES ('" + req.body.job_title + "','" + req.body.job_desc + "','" + req.body.job_brief + "','" + req.body.rate + "','" + req.body.job_payment + "', '01-01-2077','" + userId + "','" + temp + "');"
 
+	//Need this query to insert new job_id into the employer profile
 	query1 = "SELECT id FROM job ORDER BY id DESC LIMIT 1;"
 
 	db.task('get-everything', task => {
@@ -352,7 +364,7 @@ app.post('/employer_profile/new_job', function (req, res) {
 	res.redirect('/profile');
 });
 
-/* employer signup page */
+/* Employer signup page */
 app.route('/signup_employer')
 	.get((req, res) => {
 		res.render('pages/signup_employer');
@@ -403,6 +415,7 @@ app.route('/signup_employer')
 /* Signing out */
 app.get('/signout', function (req, res) {
 	state = 0;
+	userId = 0;
 	res.redirect('/');
 });
 
